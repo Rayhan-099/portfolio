@@ -39,15 +39,15 @@ export function Hero() {
                             View Projects
                             <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
                         </a>
-                        <a href="/resume.pdf" target="_blank" className="flex flex-1 sm:flex-none items-center justify-center gap-2 px-6 py-3 bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 hover:border-primary/50 text-foreground w-max rounded-xl font-medium transition-all shadow-sm">
+                        <a href="/resume.pdf" target="_blank" rel="noopener noreferrer" className="flex flex-1 sm:flex-none items-center justify-center gap-2 px-6 py-3 bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 hover:border-primary/50 text-foreground w-max rounded-xl font-medium transition-all shadow-sm">
                             <Download className="w-4 h-4" />
                             Resume
                         </a>
-                        <a href="tel:+919315945414" className="flex flex-1 sm:flex-none items-center justify-center gap-2 px-6 py-3 bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 hover:border-emerald-500/50 hover:text-emerald-500 text-foreground w-max rounded-xl font-medium transition-all shadow-sm">
+                        <a href="tel:+919315945414" target="_blank" rel="noopener noreferrer" className="flex flex-1 sm:flex-none items-center justify-center gap-2 px-6 py-3 bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 hover:border-emerald-500/50 hover:text-emerald-500 text-foreground w-max rounded-xl font-medium transition-all shadow-sm">
                             <Phone className="w-4 h-4" />
                             +91 9315945414
                         </a>
-                        <a href="mailto:khanrayhan8307@gmail.com" className="flex flex-1 sm:flex-none items-center justify-center gap-2 px-6 py-3 bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 hover:border-blue-500/50 hover:text-blue-500 text-foreground w-max rounded-xl font-medium transition-all shadow-sm">
+                        <a href="mailto:khanrayhan8307@gmail.com" target="_blank" rel="noopener noreferrer" className="flex flex-1 sm:flex-none items-center justify-center gap-2 px-6 py-3 bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 hover:border-blue-500/50 hover:text-blue-500 text-foreground w-max rounded-xl font-medium transition-all shadow-sm">
                             <Mail className="w-4 h-4" />
                             Email
                         </a>

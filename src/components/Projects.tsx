@@ -8,7 +8,7 @@ const projects = [
         title: "Current Capital - Finance Manager",
         description: "Built a full-stack personal finance web app for automated expense tracking and dynamic envelope budgeting. Integrated Google Gemini Vision AI to automatically extract and categorize transaction data from receipt images.",
         tech: ["React", "Node.js", "Express", "MongoDB", "Tailwind CSS", "Recharts", "Gemini AI"],
-        github: "https://github.com/Rayhan-099/Current-Capital",
+        github: "https://github.com/Rayhan-099/finance-manager",
         demo: "https://finance-manager-zeta.vercel.app/",
         color: "from-blue-500/20 to-purple-500/20"
     },
