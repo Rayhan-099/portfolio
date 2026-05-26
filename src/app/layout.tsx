@@ -4,12 +4,6 @@ import "./globals.css";
 import { ThemeProvider } from "@/components/theme-provider";
 
 
-export const metadata = {
-  verification: {
-    google: 'AnPPTYLx-KFhoUjgFzM-YMOfc0VMyEQHK8OORhDYxZg',
-  },
-};
-
 const inter = Inter({
   variable: "--font-inter",
   subsets: ["latin"],
@@ -28,6 +22,9 @@ const syne = Syne({
 export const metadata: Metadata = {
   title: "Rayhan Khan | Software Engineer",
   description: "Architecting scalable web platforms & engineering data-driven solutions.",
+  verification: {
+    google: "AnPPTYLx-KFhoUjgFzM-YMOfc0VMyEQHK8OORhDYxZg", // Replace with your actual GSC code
+  },
 };
 
 export default function RootLayout({
