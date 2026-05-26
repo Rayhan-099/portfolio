@@ -3,6 +3,13 @@ import { Inter, Outfit, Syne } from "next/font/google";
 import "./globals.css";
 import { ThemeProvider } from "@/components/theme-provider";
 
+
+export const metadata = {
+  verification: {
+    google: 'AnPPTYLx-KFhoUjgFzM-YMOfc0VMyEQHK8OORhDYxZg',
+  },
+};
+
 const inter = Inter({
   variable: "--font-inter",
   subsets: ["latin"],
