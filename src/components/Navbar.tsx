@@ -7,7 +7,7 @@ export function Navbar() {
         <nav className="fixed top-0 w-full z-50 bg-background/80 backdrop-blur-md border-b border-white/10">
             <div className="max-w-6xl mx-auto px-4 h-16 flex items-center justify-between">
                 <Link href="/" className="font-syne font-bold text-xl tracking-tighter">
-                    RAYHAN<span className="text-primary">.dev</span>
+                    RAYHAN<span className="text-primary">k</span>
                 </Link>
                 <div className="hidden md:flex items-center gap-8 font-inter text-sm font-medium ml-auto mr-8">
                     <Link href="#about" className="hover:text-primary transition-colors">About</Link>
