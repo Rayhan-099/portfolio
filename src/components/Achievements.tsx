@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import { motion } from "framer-motion";
-import { ArrowRight } from "lucide-react";
+import { ArrowRight, Trophy } from "lucide-react";
 import { featuredCertifications } from "../data/certifications";
 import { CertificationsModal } from "./CertificationsModal";
 
@@ -23,6 +23,33 @@ export function Achievements() {
                         Achievements & <span className="text-primary">Certifications</span>
                     </h2>
                     <div className="h-1 w-20 bg-primary rounded-full mx-auto"></div>
+                </motion.div>
+
+                {/* SIH 2025 Highlight Card */}
+                <motion.div
+                    initial={{ opacity: 0, y: 20 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    viewport={{ once: true }}
+                    transition={{ duration: 0.6 }}
+                    className="max-w-4xl mx-auto mb-8"
+                >
+                    <div className="relative overflow-hidden p-6 md:p-8 rounded-2xl bg-white/50 dark:bg-slate-900/50 border border-primary/30 dark:border-primary/40 backdrop-blur-md shadow-[0_0_30px_rgba(168,85,247,0.1)] flex flex-col md:flex-row items-center gap-6 group hover:border-primary transition-all duration-300">
+                        <div className="absolute top-0 right-0 w-32 h-32 bg-primary/10 rounded-full blur-3xl group-hover:bg-primary/20 transition-all duration-700"></div>
+                        <div className="p-4 bg-primary/20 text-primary rounded-2xl shrink-0 border border-primary/20 shadow-[0_0_15px_rgba(168,85,247,0.2)]">
+                            <Trophy className="w-10 h-10 animate-bounce" style={{ animationDuration: '3s' }} />
+                        </div>
+                        <div className="text-center md:text-left">
+                            <span className="inline-block px-3 py-1 rounded-full bg-primary/10 text-primary text-xs font-syne font-bold uppercase tracking-wider mb-2">
+                                Major Achievement
+                            </span>
+                            <h3 className="font-syne font-bold text-slate-800 dark:text-slate-100 text-xl md:text-2xl leading-snug">
+                                SIH 2025 Team Leader
+                            </h3>
+                            <p className="font-inter text-sm text-slate-600 dark:text-slate-400 mt-1">
+                                Successfully cleared the College Internal Round and led the team for Smart India Hackathon 2025.
+                            </p>
+                        </div>
+                    </div>
                 </motion.div>
 
                 <div className="grid md:grid-cols-2 gap-6 max-w-4xl mx-auto">
