@@ -6,17 +6,37 @@ import { PointMaterial, Points } from "@react-three/drei";
 import * as THREE from "three";
 import { useTheme } from "next-themes";
 
-function StarField({ count, size, color, speed, radiusOuter, radiusInner }: any) {
+// Seedable pseudo-random number generator (Mulberry32)
+function seededRandom(seed: number) {
+    return function() {
+        let t = seed += 0x6D2B79F5;
+        t = Math.imul(t ^ (t >>> 15), t | 1);
+        t ^= t + Math.imul(t ^ (t >>> 7), t | 61);
+        return ((t ^ (t >>> 14)) >>> 0) / 4294967296;
+    };
+}
+
+interface StarFieldProps {
+    count: number;
+    size: number;
+    color: string;
+    speed: number;
+    radiusOuter: number;
+    radiusInner: number;
+}
+
+function StarField({ count, size, color, speed, radiusOuter, radiusInner }: StarFieldProps) {
     const ref = useRef<THREE.Points>(null);
 
     const points = useMemo(() => {
+        const rand = seededRandom(42); // Seeded random generator for React pure rendering compliance
         const p = new Float32Array(count * 3);
         let added = 0;
         // Distribute points uniformly inside a sphere, but outside the inner radius
         while (added < count) {
-            const x = (Math.random() - 0.5) * 2 * radiusOuter;
-            const y = (Math.random() - 0.5) * 2 * radiusOuter;
-            const z = (Math.random() - 0.5) * 2 * radiusOuter;
+            const x = (rand() - 0.5) * 2 * radiusOuter;
+            const y = (rand() - 0.5) * 2 * radiusOuter;
+            const z = (rand() - 0.5) * 2 * radiusOuter;
 
             const dist = Math.sqrt(x * x + y * y + z * z);
             if (dist > radiusInner && dist < radiusOuter) {
@@ -85,6 +105,7 @@ export function Hero3D() {
     const { resolvedTheme } = useTheme();
 
     useEffect(() => {
+        // eslint-disable-next-line react-hooks/set-state-in-effect
         setMounted(true);
     }, []);
 

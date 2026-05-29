@@ -2,6 +2,7 @@
 
 import { motion } from "framer-motion";
 import { Download, ArrowRight, Phone, Mail } from "lucide-react";
+import Image from "next/image";
 
 export function Hero() {
     return (
@@ -26,12 +27,12 @@ export function Hero() {
                     <h1 className="text-5xl md:text-7xl font-outfit font-bold tracking-tight text-foreground leading-[1.1]">
                         Rayhan Khan
                         <span className="block text-transparent bg-clip-text bg-gradient-to-r from-primary to-blue-500">
-                            Software Engineer
+                            AI & Full Stack Engineer
                         </span>
                     </h1>
 
                     <p className="text-lg md:text-xl text-slate-600 dark:text-slate-400 font-inter max-w-[480px]">
-                        Architecting scalable web platforms & engineering data-driven solutions for the modern web.
+                        Architecting scalable web platforms and engineering intelligent, data-driven AI solutions. Specializing in Generative AI, Machine Learning, and Full-Stack Development.
                     </p>
 
                     <div className="flex flex-wrap gap-4 pt-4">
@@ -63,11 +64,13 @@ export function Hero() {
                 >
                     {/* User's image */}
                     <div className="absolute inset-0 bg-gradient-to-tr from-primary/20 to-transparent z-10 pointer-events-none" />
-                    <img
+                    <Image
                         src="/rayhan-headshot.jpg"
-                        onError={(e) => { e.currentTarget.src = "https://github.com/Rayhan-099.png" }}
-                        alt="Rayhan Khan"
-                        className="object-cover w-full h-full transform transition-transform duration-700"
+                        alt="Rayhan Khan | AI & Full Stack Engineer"
+                        fill
+                        sizes="(max-width: 768px) 100vw, 400px"
+                        priority
+                        className="object-cover transform transition-transform duration-700"
                     />
                 </motion.div>
             </div>

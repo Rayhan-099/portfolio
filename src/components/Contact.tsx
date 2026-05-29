@@ -1,7 +1,7 @@
 "use client";
 
 import { motion } from "framer-motion";
-import { Mail, Github, Linkedin, ArrowRight } from "lucide-react";
+import { Mail, Github, Linkedin } from "lucide-react";
 
 export function Contact() {
     return (
@@ -16,7 +16,7 @@ export function Contact() {
                     transition={{ duration: 0.8 }}
                 >
                     <h2 className="text-5xl md:text-7xl font-outfit font-bold tracking-tight mb-6">
-                        Let's build something <br />
+                        Let&apos;s build something <br />
                         <span className="text-transparent bg-clip-text bg-gradient-to-r from-primary to-blue-500">
                             amazing together.
                         </span>
@@ -24,7 +24,7 @@ export function Contact() {
 
                     <p className="text-lg md:text-xl text-slate-600 dark:text-slate-400 font-inter mb-12 max-w-2xl mx-auto">
                         Whether you have a question, a project idea, or just want to say hi, my inbox is always open.
-                        I'll try my best to get back to you!
+                        I&apos;ll try my best to get back to you!
                     </p>
 
                     <a

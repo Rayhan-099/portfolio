@@ -1,12 +1,14 @@
 import { MetadataRoute } from 'next';
 
 export default function robots(): MetadataRoute.Robots {
+  const baseUrl = 'https://rayhank.vercel.app';
+  
   return {
     rules: {
       userAgent: '*',
       allow: '/',
-      // Disallow any private routes if you have them, e.g., '/admin'
+      disallow: ['/api/', '/_next/', '/static/'],
     },
-    sitemap: 'https://rayhank.vercel.app/sitemap.xml',
+    sitemap: `${baseUrl}/sitemap.xml`,
   };
 }

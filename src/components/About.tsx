@@ -2,11 +2,12 @@
 
 import { motion } from "framer-motion";
 import { Brain, Sparkles, Bot, Binary, Network, Box, Rocket } from "lucide-react";
+import Image from "next/image";
 
 type SkillItem = {
     name: string;
     icon?: string;
-    lucideIcon?: any;
+    lucideIcon?: React.ComponentType<{ className?: string }>;
 };
 
 type SkillGroup = {
@@ -109,13 +110,13 @@ export function About() {
                         className="space-y-6 text-slate-600 dark:text-slate-400 font-inter text-lg leading-relaxed"
                     >
                         <p>
-                            I am a Software Engineer currently pursuing my Bachelor of Technology in Computer Science and Engineering at Dr. A.P.J. Abdul Kalam Technical University (AKTU).
+                            I am an AI and Full-Stack Software Engineer pursuing my Bachelor of Technology in Computer Science and Engineering at Dr. A.P.J. Abdul Kalam Technical University (AKTU).
                         </p>
                         <p>
-                            My passion lies in architecting scalable web platforms and engineering robust, data-driven solutions. I specialize in the MERN stack for full-stack web development and have deep expertise in advanced Python ecosystems, including AI and computer vision.
+                            My expertise bridges the gap between complex Machine Learning models and robust web architectures. I specialize in developing agentic AI systems, computer vision pipelines, and scalable MERN stack applications.
                         </p>
                         <p>
-                            When I'm not coding, I'm constantly learning new technologies, problem-solving, and trying to build the next big thing.
+                            When I&apos;m not coding, I&apos;m constantly exploring new Generative AI technologies, optimizing algorithmic performance, and trying to build the next big thing.
                         </p>
                     </motion.div>
 
@@ -135,7 +136,7 @@ export function About() {
                                             key={i}
                                             className="inline-flex items-center gap-2 px-3 py-1.5 bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-300 text-sm rounded-lg font-medium"
                                         >
-                                            {skill.icon && <img src={skill.icon} alt={skill.name} className="w-4 h-4 object-contain brightness-110" />}
+                                            {skill.icon && <Image src={skill.icon} alt={skill.name} width={16} height={16} className="object-contain brightness-110" />}
                                             {skill.lucideIcon && <skill.lucideIcon className="w-4 h-4" />}
                                             {skill.name}
                                         </span>

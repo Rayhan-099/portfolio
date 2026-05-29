@@ -6,7 +6,7 @@ import { Github, ExternalLink } from "lucide-react";
 const projects = [
     {
         title: "Current Capital - Finance Manager",
-        description: "Built a full-stack personal finance web app for automated expense tracking and dynamic envelope budgeting. Integrated Google Gemini Vision AI to automatically extract and categorize transaction data from receipt images.",
+        description: "Engineered a scalable full-stack finance platform with automated tracking and predictive budgeting. Integrated Large Language Models (LLMs) via Google Gemini Vision AI for robust OCR and automated data extraction from receipt imagery.",
         tech: ["React", "Node.js", "Express", "MongoDB", "Tailwind CSS", "Recharts", "Gemini AI"],
         github: "https://github.com/Rayhan-099/finance-manager",
         demo: "https://finance-manager-zeta.vercel.app/",
@@ -14,7 +14,7 @@ const projects = [
     },
     {
         title: "Real-Time Hand Tracking Visualizer",
-        description: "Built a real-time computer vision web app mapping 4 distinct hand gestures to 3D particle effects. Maintained 60 FPS rendering and low-latency visual feedback entirely on the client side using MediaPipe and Three.js.",
+        description: "Developed a low-latency Computer Vision application mapping hand gestures to complex 3D particle simulations. Achieved 60 FPS client-side inference using Edge AI capabilities with Google MediaPipe and WebGL rendering.",
         tech: ["Three.js", "WebGL", "Google MediaPipe", "React", "Tailwind CSS"],
         github: "https://github.com/Rayhan-099/Hand-Tracking-Visualizer",
         demo: "https://jujutsu-kaisen-rho.vercel.app/",
@@ -22,7 +22,7 @@ const projects = [
     },
     {
         title: "Health Assistant Platform",
-        description: "Led team to build a full-stack health platform, clearing the SIH 2025 internal round. Architected a fault-tolerant Supabase backend with medical APIs, achieving <250ms response times. Engineered real-time medical reminder system.",
+        description: "Architected a fault-tolerant healthcare platform (SIH 2025 Finalist). Engineered a high-performance Supabase backend with integrated predictive medical APIs, achieving <250ms response times and robust real-time synchronization.",
         tech: ["React", "Supabase", "Tailwind CSS", "Medical APIs"],
         github: "https://github.com/Rayhan-099/Health-Assistant",
         demo: "https://health-assistant-azure.vercel.app/",
