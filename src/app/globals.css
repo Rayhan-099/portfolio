@@ -96,3 +96,59 @@ button {
   background: linear-gradient(90deg, transparent, var(--line), transparent);
   width: 100%;
 }
+
+/* Responsive Grids */
+.grid-2col {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 4rem;
+}
+
+.grid-about {
+  display: grid;
+  grid-template-columns: 1fr 2fr;
+  gap: 4rem;
+  align-items: start;
+}
+
+.grid-project-left {
+  display: grid;
+  grid-template-columns: 1.2fr 1fr;
+  gap: 4rem;
+  align-items: center;
+}
+
+.grid-project-right {
+  display: grid;
+  grid-template-columns: 1fr 1.2fr;
+  gap: 4rem;
+  align-items: center;
+}
+
+@media (max-width: 1024px) {
+  .grid-2col, .grid-about, .grid-project-left, .grid-project-right {
+    grid-template-columns: 1fr;
+    gap: 2.5rem;
+  }
+  
+  .grid-project-left > div:first-child,
+  .grid-project-right > div:first-child {
+    order: 1 !important;
+  }
+  .grid-project-left > div:last-child,
+  .grid-project-right > div:last-child {
+    order: 2 !important;
+  }
+}
+
+@media (max-width: 768px) {
+  html {
+    font-size: 14px;
+  }
+  
+  section {
+    padding-top: 6rem !important;
+    padding-bottom: 4rem !important;
+  }
+}
+

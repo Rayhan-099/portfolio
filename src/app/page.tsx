@@ -6,10 +6,12 @@ import { Skills } from "@/components/sections/Skills";
 import { Projects } from "@/components/sections/Projects";
 import { Experience } from "@/components/sections/Experience";
 import { Contact } from "@/components/sections/Contact";
+import { AtmosphericBackground } from "@/components/effects/AtmosphericBackground";
 
 export default function Home() {
   return (
     <main>
+      <AtmosphericBackground />
       <Navigation />
       <Hero />
       <About />

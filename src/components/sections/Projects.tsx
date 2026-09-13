@@ -27,17 +27,11 @@ export function Projects() {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true, margin: "-100px" }}
               transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
-              style={{
-                display: "grid",
-                gridTemplateColumns: index % 2 === 0 ? "1.2fr 1fr" : "1fr 1.2fr",
-                gap: "4rem",
-                alignItems: "center"
-              }}
+              className={index % 2 === 0 ? "grid-project-left" : "grid-project-right"}
             >
               {/* Image / Media placeholder area */}
               <div
                 style={{
-                  order: index % 2 === 0 ? 1 : 2,
                   aspectRatio: "16/10",
                   background: "var(--surface-glass)",
                   borderRadius: "24px",
@@ -61,7 +55,7 @@ export function Projects() {
               </div>
 
               {/* Content area */}
-              <div style={{ order: index % 2 === 0 ? 2 : 1, display: "flex", flexDirection: "column", gap: "1.5rem" }}>
+              <div style={{ display: "flex", flexDirection: "column", gap: "1.5rem" }}>
                 <div>
                   <div style={{ color: "var(--accent)", fontSize: "0.875rem", letterSpacing: "0.1em", marginBottom: "0.5rem" }}>
                     {project.date}

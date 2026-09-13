@@ -9,7 +9,7 @@ import { ExternalLink } from "lucide-react";
 export function Experience() {
   return (
     <section id="experience" style={{ padding: "8rem 2rem", position: "relative", background: "var(--background-elevated)" }}>
-      <div style={{ maxWidth: "1200px", margin: "0 auto", display: "grid", gridTemplateColumns: "1fr 1fr", gap: "6rem" }}>
+      <div className="grid-2col" style={{ maxWidth: "1200px", margin: "0 auto" }}>
         
         {/* Left Column: Achievements & Education */}
         <div style={{ display: "flex", flexDirection: "column", gap: "4rem" }}>

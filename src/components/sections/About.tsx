@@ -16,14 +16,7 @@ export function About() {
         margin: "0 auto",
       }}
     >
-      <div
-        style={{
-          display: "grid",
-          gridTemplateColumns: "1fr 2fr",
-          gap: "4rem",
-          alignItems: "start",
-        }}
-      >
+      <div className="grid-about">
         <motion.div
           initial={{ opacity: 0, x: -30 }}
           whileInView={{ opacity: 1, x: 0 }}
