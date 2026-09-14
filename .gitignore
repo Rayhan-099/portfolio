@@ -39,3 +39,18 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+
+# scratch and QA
+playwright-report/
+test-results/
+screenshots/
+tests/screenshots/
+portfolio-main.zip
+dev.log
+replace-colors.js
+run-playwright.js
+graphify-out/
+.claude/
+.references/
+_old-portfolio-reference/
+*.jpeg

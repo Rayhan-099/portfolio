@@ -1,107 +1,135 @@
 "use client";
 
-import { motion } from "motion/react";
+import { motion, useScroll, useTransform } from "motion/react";
+import { useRef } from "react";
+import { experience } from "@/content/experience";
 import { education } from "@/content/education";
-import { achievements } from "@/content/achievements";
-import { certifications } from "@/content/certifications";
-import { ExternalLink } from "lucide-react";
+
+const fadeUp = {
+  hidden: { opacity: 0, y: 30 },
+  visible: (delay: number) => ({
+    opacity: 1,
+    y: 0,
+    transition: { duration: 0.8, delay, ease: [0.16, 1, 0.3, 1] as const },
+  }),
+};
 
 export function Experience() {
+  const sectionRef = useRef<HTMLElement>(null);
+  const { scrollYProgress } = useScroll({
+    target: sectionRef,
+    offset: ["start end", "end start"],
+  });
+
   return (
-    <section id="experience" style={{ padding: "8rem 2rem", position: "relative", background: "var(--background-elevated)" }}>
-      <div className="grid-2col" style={{ maxWidth: "1200px", margin: "0 auto" }}>
+    <section ref={sectionRef} id="experience" className="py-32 md:py-48 relative z-10">
+      <div className="max-w-[1600px] mx-auto px-6 md:px-12 lg:px-20">
         
-        {/* Left Column: Achievements & Education */}
-        <div style={{ display: "flex", flexDirection: "column", gap: "4rem" }}>
-          
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.6 }}
-          >
-            <h3 style={{ fontSize: "1.5rem", color: "var(--text-primary)", marginBottom: "2rem", display: "flex", alignItems: "center", gap: "1rem" }}>
-              <span style={{ color: "var(--accent)" }}>◈</span> Achievements
-            </h3>
-            <div style={{ display: "flex", flexDirection: "column", gap: "2.5rem" }}>
-              {achievements.map((item, i) => (
-                <div key={i} style={{ position: "relative", paddingLeft: "1.5rem" }}>
-                  <div style={{ position: "absolute", left: 0, top: "0.5rem", bottom: "-2.5rem", width: "1px", background: "var(--line)" }} />
-                  <div style={{ position: "absolute", left: "-3px", top: "0.5rem", width: "7px", height: "7px", borderRadius: "50%", background: "var(--accent)", boxShadow: "0 0 10px var(--glow)" }} />
-                  
-                  <h4 style={{ fontSize: "1.125rem", color: "var(--text-primary)", marginBottom: "0.25rem" }}>{item.title}</h4>
-                  <div style={{ color: "var(--accent)", fontSize: "0.875rem", marginBottom: "1rem" }}>{item.role}</div>
-                  <ul style={{ display: "flex", flexDirection: "column", gap: "0.5rem", color: "var(--text-secondary)", fontSize: "0.9375rem" }}>
-                    {item.details.map((detail, j) => (
-                      <li key={j}>{detail}</li>
-                    ))}
-                  </ul>
-                </div>
-              ))}
-            </div>
-          </motion.div>
-
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.6, delay: 0.2 }}
-          >
-            <h3 style={{ fontSize: "1.5rem", color: "var(--text-primary)", marginBottom: "2rem", display: "flex", alignItems: "center", gap: "1rem" }}>
-              <span style={{ color: "var(--accent)" }}>◈</span> Education
-            </h3>
-            <div style={{ display: "flex", flexDirection: "column", gap: "2rem" }}>
-              {education.map((item, i) => (
-                <div key={i} className="glass-panel" style={{ padding: "1.5rem", borderRadius: "12px" }}>
-                  <h4 style={{ fontSize: "1.0625rem", color: "var(--text-primary)", marginBottom: "0.25rem" }}>{item.degree}</h4>
-                  <div style={{ color: "var(--text-secondary)", fontSize: "0.9375rem", marginBottom: "0.5rem" }}>{item.institution}</div>
-                  <div style={{ display: "flex", justifyContent: "space-between", color: "var(--text-muted)", fontSize: "0.8125rem" }}>
-                    <span>{item.dates}</span>
-                    <span>{item.location}</span>
-                  </div>
-                </div>
-              ))}
-            </div>
-          </motion.div>
-
-        </div>
-
-        {/* Right Column: Certifications */}
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.6, delay: 0.4 }}
+        {/* Section header */}
+        <motion.div 
+          className="mb-24 md:mb-40"
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true, amount: 0.3 }}
         >
-          <h3 style={{ fontSize: "1.5rem", color: "var(--text-primary)", marginBottom: "2rem", display: "flex", alignItems: "center", gap: "1rem" }}>
-            <span style={{ color: "var(--accent)" }}>◈</span> Certifications
-          </h3>
-          <div style={{ display: "flex", flexDirection: "column", gap: "1rem" }}>
-            {certifications.map((cert, i) => (
-              <div 
-                key={i}
-                style={{ 
-                  display: "flex", 
-                  justifyContent: "space-between", 
-                  alignItems: "center",
-                  padding: "1rem 0",
-                  borderBottom: "1px solid var(--line)"
-                }}
-              >
-                <div>
-                  <h4 style={{ fontSize: "0.9375rem", color: "var(--text-primary)", marginBottom: "0.25rem" }}>{cert.title}</h4>
-                  <div style={{ color: "var(--text-muted)", fontSize: "0.8125rem" }}>{cert.issuer} {cert.credentialId && `· ${cert.credentialId}`}</div>
-                </div>
-                {cert.url && (
-                  <a href={cert.url} target="_blank" rel="noreferrer" style={{ color: "var(--text-secondary)", transition: "color 0.2s ease" }}>
-                    <ExternalLink size={18} />
-                  </a>
-                )}
-              </div>
-            ))}
-          </div>
+          <motion.h2 
+            variants={fadeUp} custom={0}
+            className="font-display text-6xl md:text-8xl lg:text-9xl text-[#F0EEE7] leading-[0.85] tracking-tight"
+          >
+            Engineering <br /> 
+            <span className="italic text-[#778294]">Timeline.</span>
+          </motion.h2>
         </motion.div>
 
+        {/* Chronology */}
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-16 lg:gap-24">
+          
+          {/* Main timeline */}
+          <div className="lg:col-span-8 flex flex-col gap-32 md:gap-40">
+            {experience.map((item, index) => {
+              const year = item.date.match(/\d{4}/)?.[0] || "";
+              return (
+                <motion.div 
+                  key={item.id}
+                  initial="hidden"
+                  whileInView="visible"
+                  viewport={{ once: true, margin: "-80px" }}
+                  className="relative"
+                >
+                  {/* Giant background year */}
+                  <div className="absolute -top-8 md:-top-16 -left-2 md:-left-6 select-none pointer-events-none z-0">
+                    <span className="font-display text-[10rem] md:text-[16rem] lg:text-[20rem] leading-none text-[#F0EEE7]/[0.03] tracking-tighter">
+                      {year}
+                    </span>
+                  </div>
+                  
+                  <div className="relative z-10">
+                    <motion.div variants={fadeUp} custom={0} className="flex flex-col gap-2 mb-6">
+                      <span className="text-[#8DEBFF] font-sans text-[11px] tracking-[0.3em] uppercase">
+                        {item.date}{item.location ? ` — ${item.location}` : ''}
+                      </span>
+                      <h3 className="text-4xl md:text-5xl lg:text-6xl font-display text-[#F0EEE7] leading-[0.95]">
+                        {item.company}
+                      </h3>
+                      <span className="text-[#B8C0CC] font-sans font-light text-lg tracking-wide mt-1">
+                        {item.role}
+                      </span>
+                    </motion.div>
+                    
+                    <motion.div variants={fadeUp} custom={0.15} className="mt-6 border-l-2 border-[#8DEBFF]/10 pl-6">
+                      <ul className="flex flex-col gap-4 text-[#778294] font-sans font-light text-[15px] leading-relaxed max-w-xl">
+                        {item.description.map((detail, i) => (
+                          <li key={i} className="flex items-start gap-3">
+                            <span className="w-1 h-1 rounded-full bg-[#8DEBFF]/30 mt-2.5 flex-shrink-0" />
+                            <span>{detail}</span>
+                          </li>
+                        ))}
+                      </ul>
+                    </motion.div>
+                  </div>
+                </motion.div>
+              );
+            })}
+          </div>
+
+          {/* Education sidebar */}
+          <div className="lg:col-span-4 flex flex-col gap-16 lg:pt-8">
+            <motion.div 
+              initial="hidden"
+              whileInView="visible"
+              viewport={{ once: true }}
+            >
+              <motion.h4 
+                variants={fadeUp} custom={0}
+                className="font-sans text-[11px] uppercase tracking-[0.3em] mb-12 flex items-center gap-4 text-[#B8C0CC]"
+              >
+                <span className="w-8 h-px bg-[#8DEBFF]/15" />
+                Academic
+              </motion.h4>
+              <div className="flex flex-col gap-16">
+                {education.map((item, index) => (
+                  <motion.div 
+                    key={index}
+                    variants={fadeUp}
+                    custom={index * 0.15}
+                    className="flex flex-col gap-2 group"
+                  >
+                    <span className="text-[#B8C0CC] font-sans text-[11px] tracking-[0.2em] uppercase">
+                      {item.dates} — {item.location}
+                    </span>
+                    <h5 className="font-display text-2xl md:text-3xl text-[#F0EEE7] group-hover:text-[#8DEBFF] transition-colors duration-500 leading-tight">
+                      {item.institution}
+                    </h5>
+                    <p className="text-[#778294] font-sans text-sm font-light leading-loose max-w-xs">
+                      {item.degree}
+                    </p>
+                  </motion.div>
+                ))}
+              </div>
+            </motion.div>
+          </div>
+
+        </div>
       </div>
     </section>
   );

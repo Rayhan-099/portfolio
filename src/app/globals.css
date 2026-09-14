@@ -1,69 +1,46 @@
-@import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@400;500;600;700&family=Inter:wght@300;400;500;600&display=swap');
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
 
 :root {
-  --background: #030406;
-  --background-elevated: #080a0f;
-  --surface: rgba(15, 17, 26, 0.6);
-  --surface-glass: rgba(22, 26, 38, 0.4);
-  --text-primary: #f0f4f8;
-  --text-secondary: #8a99a8;
-  --text-muted: #4e5a6a;
-  --line: rgba(240, 244, 248, 0.08);
-  --accent: #d4e0e9;
-  --accent-soft: rgba(212, 224, 233, 0.15);
-  --glow: rgba(182, 206, 224, 0.15);
-  --success: #6bb07b;
-  --warning: #d99c52;
-  --error: #c25f5f;
+  /* Primary palette - Hollow Knight/Genshin cinematic influence */
+  --background: #080A0F;
+  --background-elevated: #0D1118;
+  --surface: #101A2B;
+  --surface-glass: rgba(16, 26, 43, 0.4);
   
-  --font-sans: 'Inter', system-ui, sans-serif;
-  --font-display: 'Cinzel', serif;
-
-  --nav-height: 80px;
+  --text-primary: #F0EEE7;
+  --text-secondary: #B8C0CC;
+  --text-muted: #778294;
+  
+  /* Moon Cyan accent */
+  --accent: #8DEBFF;
+  --accent-soft: rgba(141, 235, 255, 0.15);
+  --line: rgba(240, 238, 231, 0.06);
 }
 
-* {
-  box-sizing: border-box;
-  margin: 0;
-  padding: 0;
-}
-
-html, body {
-  max-width: 100vw;
+body {
+  @apply bg-background text-foreground;
+  /* Add global film grain/noise */
+  background-image: url("data:image/svg+xml,%3Csvg viewBox=%220 0 200 200%22 xmlns=%22http://www.w3.org/2000/svg%22%3E%3Cfilter id=%22noiseFilter%22%3E%3CfeTurbulence type=%22fractalNoise%22 baseFrequency=%220.85%22 numOctaves=%223%22 stitchTiles=%22stitch%22/%3E%3C/filter%3E%3Crect width=%22100%25%22 height=%22100%25%22 filter=%22url(%23noiseFilter)%22 opacity=%220.03%22/%3E%3C/svg%3E");
+  background-repeat: repeat;
+  background-attachment: fixed;
   overflow-x: hidden;
-  background-color: var(--background);
-  color: var(--text-primary);
-  font-family: var(--font-sans);
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
 }
 
-h1, h2, h3, h4, h5, h6 {
-  font-family: var(--font-display);
-  font-weight: 500;
-  letter-spacing: 0.02em;
+/* Remove all focus outlines for mouse users, keep for keyboard */
+*:focus:not(:focus-visible) {
+  outline: none;
 }
 
-a {
-  color: inherit;
-  text-decoration: none;
+/* Base resets for the open composition layout */
+section {
+  @apply relative w-full overflow-hidden;
 }
 
-ul {
-  list-style: none;
-}
-
-button {
-  border: none;
-  background: none;
-  font-family: inherit;
-  cursor: pointer;
-  color: inherit;
-}
-
-/* Scrollbar */
+/* Elegant scrollbar matching the dark ink theme */
 ::-webkit-scrollbar {
-  width: 8px;
+  width: 4px;
 }
 ::-webkit-scrollbar-track {
   background: var(--background);
@@ -75,80 +52,3 @@ button {
 ::-webkit-scrollbar-thumb:hover {
   background: var(--text-muted);
 }
-
-/* Utilities */
-.glass-panel {
-  background: var(--surface-glass);
-  backdrop-filter: blur(12px);
-  -webkit-backdrop-filter: blur(12px);
-  border: 1px solid var(--line);
-}
-
-.text-gradient {
-  background: linear-gradient(to right, #ffffff, var(--text-secondary));
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
-}
-
-.ornament-line {
-  height: 1px;
-  background: linear-gradient(90deg, transparent, var(--line), transparent);
-  width: 100%;
-}
-
-/* Responsive Grids */
-.grid-2col {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 4rem;
-}
-
-.grid-about {
-  display: grid;
-  grid-template-columns: 1fr 2fr;
-  gap: 4rem;
-  align-items: start;
-}
-
-.grid-project-left {
-  display: grid;
-  grid-template-columns: 1.2fr 1fr;
-  gap: 4rem;
-  align-items: center;
-}
-
-.grid-project-right {
-  display: grid;
-  grid-template-columns: 1fr 1.2fr;
-  gap: 4rem;
-  align-items: center;
-}
-
-@media (max-width: 1024px) {
-  .grid-2col, .grid-about, .grid-project-left, .grid-project-right {
-    grid-template-columns: 1fr;
-    gap: 2.5rem;
-  }
-  
-  .grid-project-left > div:first-child,
-  .grid-project-right > div:first-child {
-    order: 1 !important;
-  }
-  .grid-project-left > div:last-child,
-  .grid-project-right > div:last-child {
-    order: 2 !important;
-  }
-}
-
-@media (max-width: 768px) {
-  html {
-    font-size: 14px;
-  }
-  
-  section {
-    padding-top: 6rem !important;
-    padding-bottom: 4rem !important;
-  }
-}
-

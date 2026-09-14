@@ -1,74 +1,128 @@
 "use client";
 
-import { motion } from "motion/react";
+import { motion, useScroll, useTransform } from "motion/react";
+import Image from "next/image";
+import { useRef } from "react";
 import { profile } from "@/content/profile";
 
+const revealVariants = {
+  hidden: { opacity: 0, y: 40 },
+  visible: (i: number) => ({
+    opacity: 1,
+    y: 0,
+    transition: {
+      duration: 0.9,
+      delay: i * 0.12,
+      ease: [0.16, 1, 0.3, 1] as [number, number, number, number],
+    },
+  }),
+};
+
+const clipReveal = {
+  hidden: { clipPath: "inset(0 100% 0 0)" },
+  visible: {
+    clipPath: "inset(0 0% 0 0)",
+    transition: { duration: 1.4, ease: [0.16, 1, 0.3, 1] as const },
+  },
+};
+
 export function About() {
-  const paragraphs = profile.about.split("\n\n");
+  const sectionRef = useRef<HTMLElement>(null);
+  const { scrollYProgress } = useScroll({
+    target: sectionRef,
+    offset: ["start end", "end start"],
+  });
+  const portraitY = useTransform(scrollYProgress, [0, 1], ["5%", "-5%"]);
 
   return (
-    <section
-      id="about"
-      style={{
-        padding: "10rem 2rem",
-        position: "relative",
-        maxWidth: "1200px",
-        margin: "0 auto",
-      }}
-    >
-      <div className="grid-about">
-        <motion.div
-          initial={{ opacity: 0, x: -30 }}
-          whileInView={{ opacity: 1, x: 0 }}
-          viewport={{ once: true, margin: "-100px" }}
-          transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
-        >
-          <div style={{ position: "relative" }}>
-            <h2
-              style={{
-                fontSize: "3rem",
-                color: "var(--text-primary)",
-                lineHeight: 1.1,
-                marginBottom: "2rem",
-              }}
-            >
-              System<br />
-              <span style={{ color: "var(--text-muted)" }}>Architecture</span>
-            </h2>
-            <div className="ornament-line" style={{ width: "60%" }} />
-            
-            <div style={{ marginTop: "3rem", display: "flex", flexDirection: "column", gap: "1rem" }}>
-              <div style={{ display: "flex", alignItems: "center", gap: "1rem" }}>
-                <div style={{ width: "6px", height: "6px", background: "var(--accent)", borderRadius: "50%" }} />
-                <span style={{ color: "var(--text-secondary)", fontSize: "0.875rem" }}>Location: {profile.location}</span>
-              </div>
-              <div style={{ display: "flex", alignItems: "center", gap: "1rem" }}>
-                <div style={{ width: "6px", height: "6px", background: "var(--accent)", borderRadius: "50%" }} />
-                <span style={{ color: "var(--text-secondary)", fontSize: "0.875rem" }}>Focus: AI & Full-Stack</span>
-              </div>
+    <section ref={sectionRef} id="about" className="relative z-10 py-32 md:py-48">
+      <div className="max-w-[1600px] mx-auto px-6 md:px-12 lg:px-20">
+        
+        {/* Magazine Spread: asymmetric portrait + editorial text */}
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-16 items-start">
+          
+          {/* LEFT: Large Portrait with clip-path reveal */}
+          <motion.div 
+            className="lg:col-span-5 relative"
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true, amount: 0.3 }}
+            variants={clipReveal}
+          >
+            <div className="relative w-full aspect-[3/4] overflow-hidden">
+              <motion.div style={{ y: portraitY }} className="absolute inset-[-10%] w-[120%] h-[120%]">
+                <Image
+                  src="/rayhan-headshot.jpg"
+                  alt={profile.name}
+                  fill
+                  className="object-cover"
+                  sizes="(max-width: 1024px) 100vw, 42vw"
+                />
+              </motion.div>
+              {/* Cinematic treatment — subtle desaturation on rest, full color on hover */}
+              <div className="absolute inset-0 bg-gradient-to-t from-[#080A0F] via-transparent to-transparent opacity-70" />
+              <div className="absolute inset-0 bg-[#101A2B]/20 mix-blend-color hover:opacity-0 transition-opacity duration-1000" />
             </div>
-          </div>
-        </motion.div>
+            {/* Thin caption line */}
+            <div className="mt-4 border-t border-[#8DEBFF]/10 pt-3 flex justify-between">
+              <span className="font-sans text-[11px] tracking-[0.2em] uppercase text-[#B8C0CC]">Rayhan Khan</span>
+              <span className="font-sans text-[11px] tracking-[0.2em] uppercase text-[#778294]">Engineer</span>
+            </div>
+          </motion.div>
 
-        <div style={{ display: "flex", flexDirection: "column", gap: "2rem" }}>
-          {paragraphs.map((p, i) => (
-            <motion.p
-              key={i}
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true, margin: "-100px" }}
-              transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1], delay: i * 0.15 }}
-              style={{
-                color: i === 0 ? "var(--text-primary)" : "var(--text-secondary)",
-                fontSize: i === 0 ? "1.25rem" : "1.0625rem",
-                lineHeight: 1.8,
-                fontWeight: i === 0 ? 400 : 300,
-              }}
+          {/* RIGHT: Statement & Biography */}
+          <div className="lg:col-span-7 flex flex-col justify-center lg:pt-16 lg:pl-8">
+            
+            <motion.h2 
+              className="font-display text-5xl md:text-7xl lg:text-8xl text-[#F0EEE7] leading-[1] tracking-tight mb-12"
+              initial="hidden"
+              whileInView="visible"
+              viewport={{ once: true, amount: 0.3 }}
+              variants={revealVariants}
+              custom={0}
             >
-              {p}
-            </motion.p>
-          ))}
+              Software should feel <br /> 
+              <span className="italic text-[#B8C0CC] font-light">authored,</span> <br className="hidden md:block" />
+              <span className="italic text-[#B8C0CC] font-light">not assembled.</span>
+            </motion.h2>
+
+            <div className="flex flex-col gap-6 max-w-2xl">
+              <motion.p 
+                className="text-[#F0EEE7] font-sans text-lg md:text-xl leading-relaxed"
+                initial="hidden"
+                whileInView="visible"
+                viewport={{ once: true, amount: 0.3 }}
+                variants={revealVariants}
+                custom={1}
+              >
+                I am an AI and Full-Stack Software Engineer pursuing my Bachelor of Technology in Computer Science and Engineering at Dr. A.P.J. Abdul Kalam Technical University.
+              </motion.p>
+              <motion.p 
+                className="text-[#B8C0CC] font-sans font-light text-lg md:text-xl leading-relaxed"
+                initial="hidden"
+                whileInView="visible"
+                viewport={{ once: true, amount: 0.3 }}
+                variants={revealVariants}
+                custom={2}
+              >
+                My expertise bridges complex Machine Learning models and robust web architectures. I specialize in developing agentic AI systems, computer vision pipelines, and scalable architectures.
+              </motion.p>
+              <motion.p 
+                className="text-[#778294] font-sans font-light text-base md:text-lg leading-loose border-l-2 border-[#8DEBFF]/15 pl-6"
+                initial="hidden"
+                whileInView="visible"
+                viewport={{ once: true, amount: 0.3 }}
+                variants={revealVariants}
+                custom={3}
+              >
+                When I&apos;m not coding, I&apos;m exploring Generative AI technologies, optimizing algorithmic performance, and building the next meaningful thing.
+              </motion.p>
+            </div>
+
+          </div>
+
         </div>
+
       </div>
     </section>
   );

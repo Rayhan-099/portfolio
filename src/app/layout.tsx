@@ -1,32 +1,22 @@
 import type { Metadata, Viewport } from "next";
-import { Inter, Cinzel } from "next/font/google";
+import { DM_Sans, Newsreader, JetBrains_Mono } from "next/font/google";
 import "./globals.css";
+import { SmoothScroll } from "@/components/ui/SmoothScroll";
 
-const inter = Inter({ subsets: ["latin"], variable: "--font-sans" });
-const cinzel = Cinzel({ subsets: ["latin"], variable: "--font-display" });
+const sans = DM_Sans({ subsets: ["latin"], variable: "--font-sans" });
+const display = Newsreader({ subsets: ["latin"], style: ["normal", "italic"], weight: ["300", "400", "500", "600"], variable: "--font-display" });
+const mono = JetBrains_Mono({ subsets: ["latin"], variable: "--font-mono" });
 
 export const metadata: Metadata = {
-  title: "Rayhan Khan | Software Engineer",
-  description: "Software Engineer portfolio of Rayhan Khan. Specializing in AI/ML, Full-Stack Development, and intelligent systems.",
+  title: "Rayhan Khan | AI / Full-Stack Engineer",
+  description: "Portfolio of Rayhan Khan, a Software Engineer specializing in AI/ML, Backend, and Full-Stack Development.",
   keywords: ["Software Engineer", "AI/ML", "React", "Python", "Rayhan Khan", "Full-Stack Developer"],
-  openGraph: {
-    title: "Rayhan Khan | Software Engineer",
-    description: "Building intelligent, scalable applications with modern software engineering and artificial intelligence.",
-    url: "https://rayhank.vercel.app",
-    siteName: "Rayhan Khan Portfolio",
-    locale: "en_US",
-    type: "website",
-  },
-  robots: {
-    index: true,
-    follow: true,
-  },
 };
 
 export const viewport: Viewport = {
   width: "device-width",
   initialScale: 1,
-  themeColor: "#030406",
+  themeColor: "#080A0F",
 };
 
 export default function RootLayout({
@@ -35,8 +25,12 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" className={`${inter.variable} ${cinzel.variable}`}>
-      <body>{children}</body>
+    <html lang="en">
+      <body className={`${sans.variable} ${display.variable} ${mono.variable} font-sans antialiased bg-background text-foreground selection:bg-accent/30 selection:text-accent`}>
+        <SmoothScroll>
+          {children}
+        </SmoothScroll>
+      </body>
     </html>
   );
 }

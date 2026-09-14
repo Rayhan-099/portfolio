@@ -2,70 +2,116 @@
 
 import { motion } from "motion/react";
 import { profile } from "@/content/profile";
-import { Github, Linkedin, Mail, ExternalLink } from "lucide-react";
+
+const fadeUp = {
+  hidden: { opacity: 0, y: 30 },
+  visible: (delay: number) => ({
+    opacity: 1,
+    y: 0,
+    transition: { duration: 1, delay, ease: [0.16, 1, 0.3, 1] as const },
+  }),
+};
 
 export function Contact() {
   return (
-    <section id="contact" style={{ padding: "10rem 2rem 6rem", position: "relative", textAlign: "center" }}>
-      <div style={{ maxWidth: "800px", margin: "0 auto" }}>
+    <section 
+      id="contact" 
+      className="relative min-h-[100dvh] flex flex-col justify-between py-16 md:py-24 overflow-hidden z-10"
+    >
+      {/* Warm dawn environment background */}
+      <div className="absolute inset-0 z-0">
+        <div className="absolute inset-0 bg-gradient-to-b from-[#080A0F] via-[#0D1118] to-[#101A2B]/60" />
+        {/* Warm glow from bottom */}
+        <div className="absolute inset-x-0 bottom-0 h-[60%] bg-gradient-to-t from-[#8DEBFF]/[0.08] to-transparent" />
+      </div>
+
+      <div className="max-w-[1600px] mx-auto px-6 md:px-12 lg:px-20 w-full flex-1 flex flex-col justify-center relative z-10">
         
         <motion.div
-          initial={{ opacity: 0, scale: 0.95 }}
-          whileInView={{ opacity: 1, scale: 1 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
-          className="glass-panel"
-          style={{
-            padding: "4rem 2rem",
-            borderRadius: "32px",
-            position: "relative",
-            overflow: "hidden"
-          }}
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true, margin: "-100px" }}
+          className="max-w-5xl"
         >
-          <div style={{ position: "absolute", top: 0, left: 0, right: 0, height: "1px", background: "linear-gradient(90deg, transparent, var(--accent), transparent)", opacity: 0.5 }} />
-          
-          <h2 style={{ fontSize: "3rem", marginBottom: "1rem" }}>Get in Touch</h2>
-          <p style={{ color: "var(--text-secondary)", fontSize: "1.125rem", marginBottom: "3rem", maxWidth: "500px", margin: "0 auto 3rem" }}>
-            I'm currently seeking new opportunities where I can contribute to impactful products. Whether you have a question or just want to say hi, I'll try my best to get back to you!
-          </p>
-
-          <a 
-            href={`mailto:${profile.email}`}
-            style={{
-              display: "inline-block",
-              padding: "1.25rem 3rem",
-              background: "var(--text-primary)",
-              color: "var(--background)",
-              borderRadius: "100px",
-              fontSize: "1rem",
-              fontWeight: 500,
-              letterSpacing: "0.05em",
-              marginBottom: "4rem",
-              transition: "transform 0.2s ease",
-            }}
-            onMouseEnter={(e) => e.currentTarget.style.transform = "scale(1.05)"}
-            onMouseLeave={(e) => e.currentTarget.style.transform = "scale(1)"}
+          <motion.h2 
+            variants={fadeUp} custom={0}
+            className="font-display text-[clamp(3.5rem,12vw,14rem)] text-[#F0EEE7] leading-[0.85] tracking-tight mb-12"
           >
-            Say Hello
-          </a>
-
-          <div style={{ display: "flex", justifyContent: "center", gap: "2rem" }}>
-            <a href={profile.social.github} target="_blank" rel="noreferrer" style={{ color: "var(--text-secondary)", transition: "color 0.2s ease" }}>
-              <Github size={24} />
-            </a>
-            <a href={profile.social.linkedin} target="_blank" rel="noreferrer" style={{ color: "var(--text-secondary)", transition: "color 0.2s ease" }}>
-              <Linkedin size={24} />
-            </a>
-            <a href={`mailto:${profile.email}`} style={{ color: "var(--text-secondary)", transition: "color 0.2s ease" }}>
-              <Mail size={24} />
-            </a>
-            <a href={profile.social.leetcode} target="_blank" rel="noreferrer" style={{ color: "var(--text-secondary)", transition: "color 0.2s ease" }}>
-              <ExternalLink size={24} />
-            </a>
-          </div>
+            LET&apos;S BUILD <br /> 
+            <span className="italic text-[#B8C0CC] font-light">SOMETHING</span> <br /> 
+            <span className="italic text-[#8DEBFF]">INTELLIGENT.</span>
+          </motion.h2>
         </motion.div>
 
+        <motion.div 
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true }}
+          className="flex flex-col md:flex-row items-start md:items-center gap-8 md:gap-16 mt-12"
+        >
+          <motion.a
+            variants={fadeUp} custom={0.3}
+            href={`mailto:${profile.email}`}
+            className="group relative font-sans text-sm tracking-[0.2em] uppercase text-[#F0EEE7] hover:text-[#8DEBFF] py-2 transition-colors"
+          >
+            <span className="relative z-10">Email</span>
+            <span className="absolute bottom-0 left-0 w-full h-px bg-[#8DEBFF] scale-x-0 group-hover:scale-x-100 transition-transform origin-left duration-500" />
+          </motion.a>
+          
+          {profile.social.github && (
+            <motion.a
+              variants={fadeUp} custom={0.4}
+              href={profile.social.github}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="group relative font-sans text-sm tracking-[0.2em] uppercase text-[#B8C0CC] hover:text-[#F0EEE7] py-2 transition-colors"
+            >
+              <span className="relative z-10">GitHub</span>
+              <span className="absolute bottom-0 left-0 w-full h-px bg-[#8DEBFF]/40 scale-x-0 group-hover:scale-x-100 transition-transform origin-left duration-500" />
+            </motion.a>
+          )}
+          
+          {profile.social.linkedin && (
+            <motion.a
+              variants={fadeUp} custom={0.5}
+              href={profile.social.linkedin}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="group relative font-sans text-sm tracking-[0.2em] uppercase text-[#B8C0CC] hover:text-[#F0EEE7] py-2 transition-colors"
+            >
+              <span className="relative z-10">LinkedIn</span>
+              <span className="absolute bottom-0 left-0 w-full h-px bg-[#8DEBFF]/40 scale-x-0 group-hover:scale-x-100 transition-transform origin-left duration-500" />
+            </motion.a>
+          )}
+
+          <motion.a
+            variants={fadeUp} custom={0.6}
+            href="/resume.pdf"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="group relative font-sans text-sm tracking-[0.2em] uppercase text-[#B8C0CC] hover:text-[#F0EEE7] py-2 transition-colors"
+          >
+            <span className="relative z-10">Resume</span>
+            <span className="absolute bottom-0 left-0 w-full h-px bg-[#8DEBFF]/40 scale-x-0 group-hover:scale-x-100 transition-transform origin-left duration-500" />
+          </motion.a>
+        </motion.div>
       </div>
+
+      {/* Footer */}
+      <motion.div 
+        initial={{ opacity: 0 }}
+        whileInView={{ opacity: 1 }}
+        viewport={{ once: true }}
+        transition={{ duration: 1, delay: 0.8 }}
+        className="max-w-[1600px] mx-auto px-6 md:px-12 lg:px-20 w-full flex flex-col md:flex-row justify-between items-center text-[11px] text-[#778294] font-sans uppercase tracking-[0.2em] gap-4 relative z-10"
+      >
+        <span>© {new Date().getFullYear()} Rayhan Khan</span>
+        <div className="flex gap-8">
+          <a href="/resume.pdf" target="_blank" className="hover:text-[#F0EEE7] transition-colors">Resume</a>
+          <a href="/privacy" className="hover:text-[#F0EEE7] transition-colors">Privacy</a>
+          <a href="/terms" className="hover:text-[#F0EEE7] transition-colors">Terms</a>
+        </div>
+      </motion.div>
     </section>
   );
 }

@@ -1,106 +1,264 @@
 "use client";
 
 import { motion } from "motion/react";
+import Image from "next/image";
 import { projects } from "@/content/projects";
-import { ExternalLink, Github } from "lucide-react";
+
+const imageReveal = {
+  hidden: { clipPath: "inset(0 0 100% 0)" },
+  visible: {
+    clipPath: "inset(0 0 0% 0)",
+    transition: { duration: 1.2, ease: [0.16, 1, 0.3, 1] as const },
+  },
+};
+
+const fadeUp = {
+  hidden: { opacity: 0, y: 30 },
+  visible: (delay: number) => ({
+    opacity: 1,
+    y: 0,
+    transition: { duration: 0.8, delay, ease: [0.16, 1, 0.3, 1] as const },
+  }),
+};
+
+function ProjectMeta({ project, index, total }: { project: typeof projects[0]; index: number; total: number }) {
+  return (
+    <div className="flex flex-col gap-3">
+      <span className="font-sans text-[11px] tracking-[0.4em] uppercase text-[#8DEBFF]/60">
+        {String(index + 1).padStart(2, "0")} / {String(total).padStart(2, "0")}
+      </span>
+      <div className="flex flex-wrap gap-2">
+        {project.technologies.slice(0, 4).map(tech => (
+          <span key={tech} className="font-sans text-[10px] uppercase tracking-[0.15em] text-[#778294] px-2.5 py-1 border border-[#8DEBFF]/10">
+            {tech}
+          </span>
+        ))}
+      </div>
+      <div className="flex gap-6 mt-3">
+        <a href={project.links.live} target="_blank" rel="noopener noreferrer" className="font-sans text-[11px] uppercase tracking-[0.2em] text-[#F0EEE7] hover:text-[#8DEBFF] transition-colors border-b border-[#8DEBFF]/20 hover:border-[#8DEBFF] pb-0.5">
+          Live ↗
+        </a>
+        <a href={project.links.github} target="_blank" rel="noopener noreferrer" className="font-sans text-[11px] uppercase tracking-[0.2em] text-[#778294] hover:text-[#F0EEE7] transition-colors border-b border-[#8DEBFF]/10 hover:border-[#F0EEE7] pb-0.5">
+          Source ↗
+        </a>
+      </div>
+    </div>
+  );
+}
 
 export function Projects() {
+  const total = projects.length;
+  const lumine = projects[0];
+  const currentCapital = projects[1];
+  const healthAssistant = projects[2];
+  const handTracking = projects[3];
+
   return (
-    <section id="projects" style={{ padding: "8rem 2rem", position: "relative" }}>
-      <div style={{ maxWidth: "1200px", margin: "0 auto" }}>
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.6 }}
-          style={{ marginBottom: "5rem" }}
-        >
-          <h2 style={{ fontSize: "2.5rem", marginBottom: "1rem" }}>Featured Systems</h2>
-          <div className="ornament-line" style={{ width: "200px" }} />
-        </motion.div>
-
-        <div style={{ display: "flex", flexDirection: "column", gap: "6rem" }}>
-          {projects.map((project, index) => (
-            <motion.div
-              key={project.id}
-              initial={{ opacity: 0, y: 40 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true, margin: "-100px" }}
-              transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
-              className={index % 2 === 0 ? "grid-project-left" : "grid-project-right"}
+    <section id="projects" className="relative z-10 py-24 md:py-40">
+      <div className="w-full max-w-[1600px] mx-auto px-6 md:px-12 lg:px-20">
+        
+        {/* ═══════════════════════════════════════════════════════════
+            PROJECT 01: LUMINE — Full-width cinematic hero
+           ═══════════════════════════════════════════════════════════ */}
+        {lumine && (
+          <motion.div 
+            className="mb-40 md:mb-56"
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true, amount: 0.15 }}
+          >
+            {/* Giant image — 90vw+ */}
+            <motion.div 
+              variants={imageReveal}
+              className="relative w-[calc(100%+3rem)] md:w-[calc(100%+6rem)] lg:w-[calc(100%+10rem)] -ml-6 md:-ml-12 lg:-ml-20 aspect-[16/9] overflow-hidden group"
             >
-              {/* Image / Media placeholder area */}
-              <div
-                style={{
-                  aspectRatio: "16/10",
-                  background: "var(--surface-glass)",
-                  borderRadius: "24px",
-                  border: "1px solid var(--line)",
-                  position: "relative",
-                  overflow: "hidden",
-                  display: "flex",
-                  alignItems: "center",
-                  justifyContent: "center"
-                }}
-              >
-                <div style={{
-                  position: "absolute",
-                  inset: 0,
-                  background: "radial-gradient(circle at center, var(--glow), transparent 70%)",
-                  opacity: 0.5
-                }} />
-                <span style={{ color: "var(--text-muted)", fontFamily: "var(--font-display)", letterSpacing: "0.2em", opacity: 0.5 }}>
-                  {project.id.toUpperCase()}
-                </span>
-              </div>
-
-              {/* Content area */}
-              <div style={{ display: "flex", flexDirection: "column", gap: "1.5rem" }}>
-                <div>
-                  <div style={{ color: "var(--accent)", fontSize: "0.875rem", letterSpacing: "0.1em", marginBottom: "0.5rem" }}>
-                    {project.date}
-                  </div>
-                  <h3 style={{ fontSize: "2rem", color: "var(--text-primary)", lineHeight: 1.2 }}>{project.title}</h3>
-                </div>
-
-                <div className="glass-panel" style={{ padding: "1.5rem", borderRadius: "16px" }}>
-                  <p style={{ color: "var(--text-secondary)", lineHeight: 1.6, marginBottom: "1rem" }}>
-                    {project.description}
-                  </p>
-                  <ul style={{ display: "flex", flexDirection: "column", gap: "0.5rem", color: "var(--text-secondary)", fontSize: "0.9375rem" }}>
-                    {project.details.map((detail, i) => (
-                      <li key={i} style={{ display: "flex", gap: "0.75rem", alignItems: "flex-start" }}>
-                        <span style={{ color: "var(--accent)", marginTop: "0.25rem" }}>◇</span>
-                        <span>{detail}</span>
-                      </li>
-                    ))}
-                  </ul>
-                </div>
-
-                <div style={{ display: "flex", flexWrap: "wrap", gap: "0.5rem" }}>
-                  {project.technologies.map((tech, i) => (
-                    <span key={i} style={{ color: "var(--text-muted)", fontSize: "0.875rem" }}>
-                      {tech}{i < project.technologies.length - 1 ? " · " : ""}
-                    </span>
-                  ))}
-                </div>
-
-                <div style={{ display: "flex", gap: "1.5rem", marginTop: "1rem" }}>
-                  {project.links.github && (
-                    <a href={project.links.github} target="_blank" rel="noreferrer" style={{ display: "flex", alignItems: "center", gap: "0.5rem", color: "var(--text-primary)", transition: "color 0.2s ease" }}>
-                      <Github size={20} /> <span style={{ fontSize: "0.875rem" }}>Source</span>
-                    </a>
-                  )}
-                  {project.links.live && (
-                    <a href={project.links.live} target="_blank" rel="noreferrer" style={{ display: "flex", alignItems: "center", gap: "0.5rem", color: "var(--text-primary)", transition: "color 0.2s ease" }}>
-                      <ExternalLink size={20} /> <span style={{ fontSize: "0.875rem" }}>Live Demo</span>
-                    </a>
-                  )}
-                </div>
+              <Image 
+                src="/media/projects/lumine.webp" 
+                alt={lumine.title} 
+                fill 
+                className="object-cover object-top transition-transform duration-[1.5s] group-hover:scale-[1.03]"
+                sizes="100vw"
+              />
+              <div className="absolute inset-0 bg-gradient-to-t from-[#080A0F] via-[#080A0F]/80 to-[#080A0F]/20" />
+              
+              {/* Overlay text */}
+              <div className="absolute bottom-0 left-0 w-full p-6 md:p-12 lg:p-20">
+                <motion.h3 
+                  variants={fadeUp} custom={0.2}
+                  className="font-display text-5xl md:text-7xl lg:text-9xl text-[#F0EEE7] leading-[0.85] tracking-tight"
+                >
+                  Lumine
+                </motion.h3>
+                <motion.span 
+                  variants={fadeUp} custom={0.35}
+                  className="font-sans text-lg md:text-2xl text-[#8DEBFF] italic block mt-3"
+                >
+                  AI-Powered Skin Intelligence
+                </motion.span>
               </div>
             </motion.div>
-          ))}
-        </div>
+
+            {/* Description row */}
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mt-10 md:mt-16">
+              <motion.p 
+                variants={fadeUp} custom={0.4}
+                className="font-sans text-base md:text-lg text-[#778294] font-light leading-relaxed max-w-xl"
+              >
+                {lumine.description}
+              </motion.p>
+              <motion.div variants={fadeUp} custom={0.5} className="md:flex md:justify-end">
+                <ProjectMeta project={lumine} index={0} total={total} />
+              </motion.div>
+            </div>
+          </motion.div>
+        )}
+
+        {/* ═══════════════════════════════════════════════════════════
+            PROJECT 02: CURRENT CAPITAL — Asymmetric 50/50 split
+           ═══════════════════════════════════════════════════════════ */}
+        {currentCapital && (
+          <motion.div 
+            className="mb-40 md:mb-56 grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-20 items-center"
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true, amount: 0.2 }}
+          >
+            {/* Text side */}
+            <div className="order-2 lg:order-1 flex flex-col gap-6">
+              <motion.h3 
+                variants={fadeUp} custom={0}
+                className="font-display text-5xl md:text-7xl text-[#F0EEE7] leading-[0.9] tracking-tight"
+              >
+                Current <br/>
+                <span className="italic text-[#778294]">Capital</span>
+              </motion.h3>
+              <motion.span variants={fadeUp} custom={0.1} className="font-sans text-lg text-[#8DEBFF] italic">
+                Finance Manager
+              </motion.span>
+              <motion.p 
+                variants={fadeUp} custom={0.2}
+                className="font-sans text-base text-[#778294] font-light leading-relaxed max-w-md"
+              >
+                {currentCapital.description}
+              </motion.p>
+              <motion.div variants={fadeUp} custom={0.3}>
+                <ProjectMeta project={currentCapital} index={1} total={total} />
+              </motion.div>
+            </div>
+
+            {/* Image side — square crop */}
+            <motion.div 
+              variants={imageReveal}
+              className="order-1 lg:order-2 relative aspect-square overflow-hidden group"
+            >
+              <Image 
+                src="/media/projects/current-capital.webp" 
+                alt={currentCapital.title} 
+                fill 
+                className="object-cover object-left-top transition-transform duration-[1.5s] group-hover:scale-[1.03]"
+                sizes="(max-width: 1024px) 100vw, 50vw"
+              />
+            </motion.div>
+          </motion.div>
+        )}
+
+        {/* ═══════════════════════════════════════════════════════════
+            PROJECT 03: HEALTH ASSISTANT — Reverse split, vertical image
+           ═══════════════════════════════════════════════════════════ */}
+        {healthAssistant && (
+          <motion.div 
+            className="mb-40 md:mb-56 grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-16 items-start"
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true, amount: 0.15 }}
+          >
+            {/* Tall editorial image */}
+            <motion.div 
+              variants={imageReveal}
+              className="lg:col-span-7 relative aspect-[3/4] overflow-hidden group"
+            >
+              <Image 
+                src="/media/projects/health-assistant.webp" 
+                alt={healthAssistant.title} 
+                fill 
+                className="object-cover transition-transform duration-[1.5s] group-hover:scale-[1.03]"
+                sizes="(max-width: 1024px) 100vw, 58vw"
+              />
+              <div className="absolute inset-0 bg-gradient-to-t from-[#080A0F] via-[#080A0F]/40 to-transparent" />
+            </motion.div>
+
+            {/* Text — offset down for asymmetry */}
+            <div className="lg:col-span-5 flex flex-col gap-6 lg:pt-32">
+              <motion.h3 
+                variants={fadeUp} custom={0}
+                className="font-display text-4xl md:text-6xl text-[#F0EEE7] leading-[0.95] tracking-tight"
+              >
+                Health <br/>
+                <span className="italic text-[#778294]">Assistant</span>
+              </motion.h3>
+              <motion.p 
+                variants={fadeUp} custom={0.15}
+                className="font-sans text-base text-[#778294] font-light leading-relaxed border-l-2 border-[#8DEBFF]/10 pl-5"
+              >
+                {healthAssistant.description}
+              </motion.p>
+              <motion.div variants={fadeUp} custom={0.25}>
+                <ProjectMeta project={healthAssistant} index={2} total={total} />
+              </motion.div>
+            </div>
+          </motion.div>
+        )}
+
+        {/* ═══════════════════════════════════════════════════════════
+            PROJECT 04: HAND TRACKING — Cinematic ultra-wide
+           ═══════════════════════════════════════════════════════════ */}
+        {handTracking && (
+          <motion.div
+            className="flex flex-col items-center"
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true, amount: 0.15 }}
+          >
+            <motion.div variants={fadeUp} custom={0} className="text-center mb-10 md:mb-16">
+              <span className="font-sans text-[11px] tracking-[0.4em] uppercase text-[#8DEBFF]/60 block mb-4">04 / {String(total).padStart(2, "0")}</span>
+              <h3 className="font-display text-4xl md:text-6xl lg:text-7xl text-[#F0EEE7] tracking-tight">
+                Real-Time Hand <br className="hidden md:block" />
+                <span className="italic text-[#778294]">Tracking Visualizer</span>
+              </h3>
+            </motion.div>
+            
+            {/* Ultra-wide image */}
+            <motion.div 
+              variants={imageReveal}
+              className="relative w-[calc(100%+3rem)] md:w-[calc(100%+6rem)] lg:w-[calc(100%+10rem)] -ml-6 md:-ml-12 lg:-ml-20 aspect-[21/9] overflow-hidden group"
+            >
+              <Image 
+                src="/media/projects/hand-tracking.webp" 
+                alt={handTracking.title} 
+                fill 
+                className="object-cover transition-transform duration-[1.5s] group-hover:scale-[1.03]"
+                sizes="100vw"
+              />
+              <div className="absolute inset-0 bg-gradient-to-t from-[#080A0F] via-[#080A0F]/70 to-[#080A0F]/10" />
+            </motion.div>
+
+            {/* Description */}
+            <div className="mt-10 md:mt-16 max-w-2xl text-center flex flex-col items-center gap-6">
+              <motion.p variants={fadeUp} custom={0.2} className="font-sans text-base md:text-lg text-[#778294] font-light leading-relaxed">
+                {handTracking.description} {handTracking.details[0]}
+              </motion.p>
+              <motion.div variants={fadeUp} custom={0.3} className="flex gap-6">
+                <a href={handTracking.links.live} target="_blank" rel="noopener noreferrer" className="font-sans text-[11px] uppercase tracking-[0.2em] text-[#F0EEE7] hover:text-[#8DEBFF] transition-colors border-b border-[#8DEBFF]/20 hover:border-[#8DEBFF] pb-0.5">
+                  Live Demo ↗
+                </a>
+                <a href={handTracking.links.github} target="_blank" rel="noopener noreferrer" className="font-sans text-[11px] uppercase tracking-[0.2em] text-[#778294] hover:text-[#F0EEE7] transition-colors border-b border-[#8DEBFF]/10 hover:border-[#F0EEE7] pb-0.5">
+                  Source ↗
+                </a>
+              </motion.div>
+            </div>
+          </motion.div>
+        )}
+
       </div>
     </section>
   );

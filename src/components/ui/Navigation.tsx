@@ -1,80 +1,81 @@
 "use client";
 
-import { useEffect, useState } from "react";
-import Link from "next/link";
-import { motion } from "motion/react";
-import { profile } from "@/content/profile";
+import { motion, useScroll, useMotionValueEvent } from "motion/react";
+import { useState } from "react";
 
-const navLinks = [
-  { name: "About", href: "#about" },
-  { name: "Skills", href: "#skills" },
-  { name: "Projects", href: "#projects" },
-  { name: "Experience", href: "#experience" },
-  { name: "Contact", href: "#contact" },
+const NAV_ITEMS = [
+  { label: "Work", href: "#projects" },
+  { label: "About", href: "#about" },
+  { label: "Experience", href: "#experience" },
+  { label: "Contact", href: "#contact" },
 ];
 
 export function Navigation() {
+  const { scrollY } = useScroll();
   const [scrolled, setScrolled] = useState(false);
-
-  useEffect(() => {
-    const handleScroll = () => setScrolled(window.scrollY > 50);
-    window.addEventListener("scroll", handleScroll);
-    return () => window.removeEventListener("scroll", handleScroll);
-  }, []);
+  
+  useMotionValueEvent(scrollY, "change", (latest) => {
+    if (latest > 50) {
+      setScrolled(true);
+    } else {
+      setScrolled(false);
+    }
+  });
 
   return (
-    <motion.header
-      initial={{ y: -100 }}
-      animate={{ y: 0 }}
-      transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
-      style={{
-        position: "fixed",
-        top: 0,
-        left: 0,
-        right: 0,
-        zIndex: 50,
-        display: "flex",
-        justifyContent: "center",
-        padding: "1rem",
-      }}
-    >
-      <div
-        className="glass-panel"
-        style={{
-          display: "flex",
-          alignItems: "center",
-          justifyContent: "space-between",
-          padding: "0.75rem 2rem",
-          borderRadius: "100px",
-          width: "100%",
-          maxWidth: "1200px",
-          transition: "background-color 0.3s ease",
-          backgroundColor: scrolled ? "var(--surface-glass)" : "transparent",
-          border: scrolled ? "1px solid var(--line)" : "1px solid transparent",
-        }}
+    <>
+      {/* Top Edge Navigation */}
+      <motion.nav
+        initial={{ y: -20, opacity: 0 }}
+        animate={{ y: 0, opacity: 1 }}
+        transition={{ duration: 1.2, ease: [0.16, 1, 0.3, 1], delay: 0.2 }}
+        className={`fixed top-0 left-0 w-full z-50 px-6 md:px-12 py-6 flex justify-between items-center transition-all duration-500 pointer-events-none mix-blend-difference ${
+          scrolled ? "py-4" : ""
+        }`}
       >
-        <Link href="/" style={{ fontFamily: "var(--font-display)", fontSize: "1.25rem", fontWeight: 600 }}>
-          {profile.name.split(" ")[0]}
-        </Link>
-
-        <nav style={{ display: "flex", gap: "2rem" }}>
-          {navLinks.map((link) => (
-            <Link
-              key={link.name}
-              href={link.href}
-              style={{
-                fontSize: "0.875rem",
-                color: "var(--text-secondary)",
-                transition: "color 0.2s ease",
-              }}
-              onMouseEnter={(e) => (e.currentTarget.style.color = "var(--text-primary)")}
-              onMouseLeave={(e) => (e.currentTarget.style.color = "var(--text-secondary)")}
+        <div className="font-display text-xl text-foreground font-semibold tracking-widest uppercase pointer-events-auto">
+          RAYHAN
+        </div>
+        
+        <div className="hidden md:flex gap-8 items-center pointer-events-auto">
+          {NAV_ITEMS.map((item) => (
+            <a 
+              key={item.label} 
+              href={item.href}
+              className="text-[11px] font-sans uppercase tracking-[0.2em] text-foreground-secondary hover:text-foreground transition-colors"
             >
-              {link.name}
-            </Link>
+              {item.label}
+            </a>
           ))}
-        </nav>
-      </div>
-    </motion.header>
+        </div>
+
+        <div className="hidden lg:flex items-center pointer-events-auto">
+          <a href="/resume.pdf" target="_blank" rel="noopener noreferrer" className="text-[11px] font-sans uppercase tracking-[0.2em] text-accent hover:text-accent-soft transition-colors">
+            [ Download Resume ]
+          </a>
+        </div>
+      </motion.nav>
+      
+      {/* Scroll Line Indicator */}
+      <motion.div 
+        initial={{ opacity: 0 }}
+        animate={{ opacity: scrolled ? 0 : 1 }}
+        transition={{ duration: 0.5 }}
+        className="fixed bottom-12 left-1/2 -translate-x-1/2 z-40 flex flex-col items-center gap-4 mix-blend-difference pointer-events-none"
+      >
+        <span className="text-[9px] font-mono tracking-widest uppercase text-foreground-secondary">
+          SCROLL
+        </span>
+        <motion.div 
+          className="w-px h-12 bg-line relative overflow-hidden"
+        >
+          <motion.div 
+            className="absolute top-0 left-0 w-full h-full bg-foreground"
+            animate={{ y: ["-100%", "100%"] }}
+            transition={{ duration: 2, repeat: Infinity, ease: "linear" }}
+          />
+        </motion.div>
+      </motion.div>
+    </>
   );
 }

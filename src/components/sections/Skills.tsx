@@ -1,92 +1,133 @@
 "use client";
 
 import { motion } from "motion/react";
-import { skills } from "@/content/skills";
+import Image from "next/image";
 
-const SkillCategory = ({ title, items, delay }: { title: string, items: string[], delay: number }) => (
-  <motion.div
-    initial={{ opacity: 0, y: 30 }}
-    whileInView={{ opacity: 1, y: 0 }}
-    viewport={{ once: true, margin: "-50px" }}
-    transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1], delay }}
-    className="glass-panel"
-    style={{
-      padding: "2rem",
-      borderRadius: "16px",
-      display: "flex",
-      flexDirection: "column",
-      gap: "1.5rem",
-      position: "relative",
-      overflow: "hidden"
-    }}
-  >
-    <div style={{
-      position: "absolute",
-      top: 0,
-      left: 0,
-      width: "100%",
-      height: "1px",
-      background: "linear-gradient(90deg, transparent, var(--accent-soft), transparent)"
-    }} />
-    <h3 style={{ fontSize: "1.125rem", color: "var(--accent)", letterSpacing: "0.05em" }}>{title}</h3>
-    <div style={{ display: "flex", flexWrap: "wrap", gap: "0.75rem" }}>
-      {items.map((skill, i) => (
-        <span
-          key={i}
-          style={{
-            padding: "0.5rem 1rem",
-            background: "rgba(255,255,255,0.03)",
-            border: "1px solid var(--line)",
-            borderRadius: "100px",
-            fontSize: "0.875rem",
-            color: "var(--text-secondary)",
-            transition: "all 0.3s ease",
-            cursor: "default"
-          }}
-          onMouseEnter={(e) => {
-            e.currentTarget.style.color = "var(--text-primary)";
-            e.currentTarget.style.background = "rgba(255,255,255,0.08)";
-            e.currentTarget.style.borderColor = "var(--accent-soft)";
-          }}
-          onMouseLeave={(e) => {
-            e.currentTarget.style.color = "var(--text-secondary)";
-            e.currentTarget.style.background = "rgba(255,255,255,0.03)";
-            e.currentTarget.style.borderColor = "var(--line)";
-          }}
-        >
-          {skill}
-        </span>
-      ))}
-    </div>
-  </motion.div>
-);
+const fadeUp = {
+  hidden: { opacity: 0, y: 30 },
+  visible: (delay: number) => ({
+    opacity: 1,
+    y: 0,
+    transition: { duration: 0.8, delay, ease: [0.16, 1, 0.3, 1] as const },
+  }),
+};
+
+const categories = [
+  {
+    number: "01",
+    title: "Intelligence",
+    items: [
+      { name: "Machine Learning", icon: "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/pytorch/pytorch-original.svg", desc: "Predictive models, deep learning architectures, and neural network optimization." },
+      { name: "Computer Vision", icon: "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/opencv/opencv-original.svg", desc: "Real-time object detection, image classification, and MediaPipe integration." },
+      { name: "Generative AI", icon: null, desc: "LLM integration, RAG systems, Hugging Face models, and prompt engineering." },
+      { name: "Data Science", icon: "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/pandas/pandas-original.svg", desc: "Data preprocessing, exploratory analysis, and visualization pipelines." },
+    ],
+  },
+  {
+    number: "02",
+    title: "Systems",
+    items: [
+      { name: "Python & FastAPI", icon: "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/python/python-original.svg", desc: "High-performance asynchronous backends and AI model serving." },
+      { name: "Node.js & TypeScript", icon: "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/nodejs/nodejs-original.svg", desc: "Scalable network applications and strongly typed server logic." },
+      { name: "PostgreSQL", icon: "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/postgresql/postgresql-original.svg", desc: "Relational database design, complex querying, and data integrity." },
+      { name: "Docker", icon: "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/docker/docker-original.svg", desc: "Containerization, isolated environments, and deployment pipelines." },
+    ],
+  },
+  {
+    number: "03",
+    title: "Interactive",
+    items: [
+      { name: "React & Next.js", icon: "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/react/react-original.svg", desc: "Component-driven UI, SSR, and dynamic frontend architectures." },
+      { name: "Three.js & WebGL", icon: "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/threejs/threejs-original.svg", desc: "3D graphics, custom shaders, and immersive browser environments." },
+      { name: "Motion & Animation", icon: null, desc: "Complex timeline animations, scroll-driven interactions, and fluid motion." },
+      { name: "Tailwind CSS", icon: "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/tailwindcss/tailwindcss-original.svg", desc: "Utility-first styling for rapid, responsive, and consistent design systems." },
+    ],
+  },
+];
 
 export function Skills() {
   return (
-    <section id="skills" style={{ padding: "8rem 2rem", position: "relative" }}>
-      <div style={{ maxWidth: "1200px", margin: "0 auto" }}>
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.6 }}
-          style={{ marginBottom: "4rem", textAlign: "center" }}
+    <section id="skills" className="relative z-10 py-32 md:py-48">
+      
+      <div className="max-w-[1600px] mx-auto px-6 md:px-12 lg:px-20">
+        
+        <motion.div 
+          className="mb-24 md:mb-40"
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true, amount: 0.3 }}
         >
-          <h2 style={{ fontSize: "2.5rem", marginBottom: "1rem" }}>Technical Matrix</h2>
-          <div className="ornament-line" style={{ width: "200px", margin: "0 auto" }} />
+          <motion.h2 
+            variants={fadeUp} custom={0}
+            className="font-display text-6xl md:text-8xl lg:text-9xl text-[#F0EEE7] leading-[0.85] tracking-tight"
+          >
+            Technical <br /> 
+            <span className="italic text-[#778294]">Taxonomy.</span>
+          </motion.h2>
         </motion.div>
 
-        <div style={{
-          display: "grid",
-          gridTemplateColumns: "repeat(auto-fit, minmax(320px, 1fr))",
-          gap: "1.5rem"
-        }}>
-          <SkillCategory title="Languages" items={skills.languages} delay={0.1} />
-          <SkillCategory title="AI & Data Science" items={skills.aiDataScience} delay={0.2} />
-          <SkillCategory title="Frameworks" items={skills.frameworks} delay={0.3} />
-          <SkillCategory title="Databases & Cloud" items={skills.databasesCloud} delay={0.4} />
-          <SkillCategory title="Core Competencies" items={skills.coreCompetencies} delay={0.5} />
-          <SkillCategory title="Tools & Environments" items={skills.toolsEnvironments} delay={0.6} />
+        <div className="flex flex-col gap-32 md:gap-40">
+          {categories.map((category, catIdx) => (
+            <motion.div 
+              key={category.number}
+              className="flex flex-col lg:flex-row gap-12 lg:gap-24 items-start border-t border-[#8DEBFF]/10 pt-12 md:pt-16"
+              initial="hidden"
+              whileInView="visible"
+              viewport={{ once: true, amount: 0.15 }}
+            >
+              {/* Category label */}
+              <div className="w-full lg:w-1/3 flex-shrink-0">
+                <motion.span 
+                  variants={fadeUp} custom={0}
+                  className="font-sans text-[11px] tracking-[0.4em] uppercase text-[#8DEBFF]/60 mb-4 block"
+                >
+                  {category.number}
+                </motion.span>
+                <motion.h3 
+                  variants={fadeUp} custom={0.08}
+                  className="font-display text-5xl md:text-7xl text-[#F0EEE7] italic leading-[0.9]"
+                >
+                  {category.title}
+                </motion.h3>
+              </div>
+
+              {/* Skill items */}
+              <div className="w-full lg:w-2/3">
+                <ul className="grid grid-cols-1 md:grid-cols-2 gap-y-10 gap-x-12 md:gap-x-16">
+                  {category.items.map((item, itemIdx) => (
+                    <motion.li 
+                      key={item.name} 
+                      variants={fadeUp}
+                      custom={0.1 + itemIdx * 0.08}
+                      className="flex flex-col gap-3 group"
+                    >
+                      <div className="flex items-center gap-3">
+                        {item.icon ? (
+                          <Image 
+                            src={item.icon} 
+                            alt={item.name} 
+                            width={22} 
+                            height={22} 
+                            className="opacity-60 grayscale group-hover:grayscale-0 group-hover:opacity-100 transition-all duration-500" 
+                          />
+                        ) : (
+                          <span className="w-[22px] h-[22px] rounded-sm border border-[#8DEBFF]/20 flex items-center justify-center text-[8px] text-[#8DEBFF]/60 font-sans">
+                            AI
+                          </span>
+                        )}
+                        <span className="font-sans text-lg tracking-wide text-[#F0EEE7] group-hover:text-[#8DEBFF] transition-colors duration-300">
+                          {item.name}
+                        </span>
+                      </div>
+                      <span className="font-sans text-sm text-[#778294] font-light leading-relaxed border-l border-[#8DEBFF]/8 pl-4">
+                        {item.desc}
+                      </span>
+                    </motion.li>
+                  ))}
+                </ul>
+              </div>
+            </motion.div>
+          ))}
         </div>
       </div>
     </section>

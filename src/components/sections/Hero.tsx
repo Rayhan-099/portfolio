@@ -1,131 +1,164 @@
 "use client";
 
-import { motion } from "motion/react";
+import { useEffect, useRef } from "react";
+import { motion, useScroll, useTransform } from "motion/react";
+import { createTimeline, utils } from "animejs";
 import { profile } from "@/content/profile";
 
 export function Hero() {
+  const containerRef = useRef<HTMLElement>(null);
+  
+  const { scrollYProgress } = useScroll({
+    target: containerRef,
+    offset: ["start start", "end start"],
+  });
+
+  const opacity = useTransform(scrollYProgress, [0, 0.8], [1, 0]);
+  const y = useTransform(scrollYProgress, [0, 1], ["0%", "30%"]);
+  const bgScale = useTransform(scrollYProgress, [0, 1], [1, 1.15]);
+  const bgY = useTransform(scrollYProgress, [0, 1], ["0%", "10%"]);
+
+  useEffect(() => {
+    const tl = createTimeline({
+      defaults: {
+        ease: 'outExpo',
+      }
+    });
+
+    tl.add('.hero-env-mask', {
+      opacity: [1, 0],
+      duration: 2200,
+      ease: 'linear',
+    }, 0)
+    .add('.hero-name-word', {
+      translateY: [120, 0],
+      opacity: [0, 1],
+      rotateZ: [4, 0],
+      duration: 1600,
+      delay: utils.stagger(180, { start: 800 }),
+    }, 0)
+    .add('.hero-role', {
+      translateY: [40, 0],
+      opacity: [0, 1],
+      duration: 1200,
+    }, 1400)
+    .add('.hero-statement', {
+      translateY: [20, 0],
+      opacity: [0, 1],
+      duration: 1000,
+    }, 1800)
+    .add('.hero-cta', {
+      opacity: [0, 1],
+      translateY: [15, 0],
+      duration: 1000,
+      delay: utils.stagger(100),
+    }, 2000)
+    .add('.hero-scroll-indicator', {
+      opacity: [0, 1],
+      translateY: [10, 0],
+      duration: 800,
+    }, 2400);
+    
+  }, []);
+
+  const [firstName, lastName] = profile.name.split(' ');
+
   return (
-    <section
-      id="home"
-      style={{
-        minHeight: "100vh",
-        display: "flex",
-        flexDirection: "column",
-        justifyContent: "center",
-        alignItems: "center",
-        position: "relative",
-        padding: "2rem",
-        overflow: "hidden",
-      }}
+    <section 
+      ref={containerRef}
+      id="hero" 
+      className="relative w-full min-h-[100dvh] flex flex-col justify-end overflow-hidden"
     >
-      {/* Background Atmosphere */}
-      <div
-        style={{
-          position: "absolute",
-          top: "50%",
-          left: "50%",
-          transform: "translate(-50%, -50%)",
-          width: "80vw",
-          height: "80vw",
-          background: "radial-gradient(circle, var(--glow) 0%, transparent 60%)",
-          zIndex: 0,
-          pointerEvents: "none",
-        }}
-      />
-
-      <div style={{ position: "relative", zIndex: 1, textAlign: "center", maxWidth: "800px" }}>
-        <motion.div
-          initial={{ opacity: 0, y: 30 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 1, ease: [0.16, 1, 0.3, 1], delay: 0.2 }}
-        >
-          <h2 style={{ color: "var(--accent)", fontSize: "1rem", letterSpacing: "0.2em", textTransform: "uppercase", marginBottom: "1rem" }}>
-            {profile.role}
-          </h2>
-        </motion.div>
-
-        <motion.h1
-          initial={{ opacity: 0, y: 30 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 1, ease: [0.16, 1, 0.3, 1], delay: 0.4 }}
-          style={{
-            fontSize: "clamp(3rem, 8vw, 6rem)",
-            lineHeight: 1.1,
-            marginBottom: "1.5rem",
-          }}
-        >
-          {profile.name}
-        </motion.h1>
-
-        <motion.p
-          initial={{ opacity: 0, y: 30 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 1, ease: [0.16, 1, 0.3, 1], delay: 0.6 }}
-          style={{
-            color: "var(--text-secondary)",
-            fontSize: "1.125rem",
-            lineHeight: 1.6,
-            maxWidth: "600px",
-            margin: "0 auto 3rem auto",
-          }}
-        >
-          {profile.tagline}
-        </motion.p>
-
-        <motion.div
-          initial={{ opacity: 0, y: 30 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 1, ease: [0.16, 1, 0.3, 1], delay: 0.8 }}
-        >
-          <a
-            href="#projects"
-            className="glass-panel"
-            style={{
-              display: "inline-block",
-              padding: "1rem 2.5rem",
-              borderRadius: "100px",
-              color: "var(--text-primary)",
-              fontSize: "0.875rem",
-              letterSpacing: "0.1em",
-              textTransform: "uppercase",
-              transition: "all 0.3s ease",
-            }}
-            onMouseEnter={(e) => {
-              e.currentTarget.style.background = "var(--line)";
-            }}
-            onMouseLeave={(e) => {
-              e.currentTarget.style.background = "var(--surface-glass)";
-            }}
-          >
-            Explore Work
-          </a>
-        </motion.div>
-      </div>
-
-      {/* Scroll Indicator */}
-      <motion.div
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        transition={{ duration: 1, delay: 1.5 }}
-        style={{
-          position: "absolute",
-          bottom: "3rem",
-          left: "50%",
-          transform: "translateX(-50%)",
-          display: "flex",
-          flexDirection: "column",
-          alignItems: "center",
-          gap: "1rem",
-        }}
+      
+      {/* Full-bleed cinematic background media */}
+      <motion.div 
+        style={{ scale: bgScale, y: bgY }} 
+        className="absolute inset-0 z-0"
       >
-        <span style={{ fontSize: "0.75rem", color: "var(--text-muted)", letterSpacing: "0.2em", textTransform: "uppercase" }}>
-          Scroll
-        </span>
-        <div style={{ width: "1px", height: "40px", background: "var(--line)", position: "relative", overflow: "hidden" }}>
-          <motion.div
-            animate={{ y: ["-100%", "100%"] }}
-            transition={{ repeat: Infinity, duration: 1.5, ease: "linear" }}
-            style={{ width: "100%", height: "50%", background: "var(--accent)" }}
+        <video 
+          src="/media/atmosphere/hero-video.mp4" 
+          autoPlay 
+          loop 
+          muted 
+          playsInline
+          className="w-full h-full object-cover"
+        />
+        {/* Atmospheric depth vignette */}
+        <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_50%_30%,transparent_0%,rgba(8,10,15,0.7)_60%,rgba(8,10,15,0.95)_100%)]" />
+      </motion.div>
+
+      {/* Black fade-in mask for cinematic entrance */}
+      <div className="hero-env-mask absolute inset-0 z-30 bg-[#080A0F] pointer-events-none" />
+
+      {/* Bottom gradient to blend into next section */}
+      <div className="absolute inset-x-0 bottom-0 h-[40%] z-10 bg-gradient-to-t from-[#080A0F] via-[#080A0F]/60 to-transparent pointer-events-none" />
+
+      {/* Cherry blossom foreground layer — subtle depth */}
+      <motion.div style={{ opacity, y: useTransform(scrollYProgress, [0, 1], ["0%", "-5%"]) }} className="absolute top-0 right-0 w-[50vw] h-[60vh] z-[5] pointer-events-none opacity-20 mix-blend-screen">
+        <img src="/media/atmosphere/mist.png" alt="" className="w-full h-full object-cover object-right-top" />
+      </motion.div>
+
+      {/* Main Content — positioned at bottom for cinematic weight */}
+      <motion.div 
+        style={{ opacity, y }}
+        className="relative z-20 w-full max-w-[1600px] mx-auto px-6 md:px-12 xl:px-20 pb-16 md:pb-24"
+      >
+        <div className="flex flex-col gap-6 md:gap-8">
+          
+          {/* Giant Name */}
+          <h1 className="font-display text-[clamp(5rem,15vw,20rem)] leading-[0.8] tracking-tighter text-[#F0EEE7] flex flex-col items-start">
+            <div className="overflow-hidden pb-2">
+              <span className="hero-name-word inline-block origin-bottom-left opacity-0">{firstName}</span>
+            </div>
+            <div className="overflow-hidden pb-4 ml-0 md:ml-[10%]">
+              <span className="hero-name-word inline-block origin-bottom-left italic text-[#B8C0CC] opacity-0">{lastName}</span>
+            </div>
+          </h1>
+
+          {/* Role & Statement */}
+          <div className="flex flex-col md:flex-row md:items-end md:justify-between gap-6 md:gap-16 max-w-5xl">
+            <div className="flex flex-col gap-3">
+              <h2 className="hero-role font-sans text-xl md:text-2xl text-[#8DEBFF] tracking-wide font-light opacity-0">
+                AI & Full Stack Engineer
+              </h2>
+              <p className="hero-statement font-sans text-base md:text-lg text-[#B8C0CC] font-light leading-relaxed max-w-lg opacity-0">
+                Architecting intelligent systems with the curiosity of an engineer and the eye of a storyteller.
+              </p>
+            </div>
+            
+            {/* CTAs */}
+            <div className="flex flex-wrap gap-4 hero-cta opacity-0">
+              <a 
+                href="#projects" 
+                className="group flex items-center gap-3 px-8 py-3.5 bg-[#F0EEE7] text-[#080A0F] font-sans font-medium text-sm tracking-wide transition-all duration-300 hover:bg-[#8DEBFF] active:scale-[0.98]"
+              >
+                View Projects
+                <span className="inline-block transition-transform duration-300 group-hover:translate-x-1">→</span>
+              </a>
+              <a 
+                href="/resume.pdf" 
+                target="_blank" 
+                rel="noopener noreferrer" 
+                className="flex items-center gap-3 px-8 py-3.5 border border-[#F0EEE7]/20 text-[#F0EEE7] font-sans font-medium text-sm tracking-wide transition-all duration-300 hover:border-[#F0EEE7]/60 backdrop-blur-sm active:scale-[0.98]"
+              >
+                Resume
+              </a>
+            </div>
+          </div>
+        </div>
+      </motion.div>
+
+      {/* Minimal scroll indicator */}
+      <motion.div 
+        style={{ opacity }} 
+        className="hero-scroll-indicator opacity-0 absolute bottom-8 left-1/2 -translate-x-1/2 z-20 flex flex-col items-center gap-3"
+      >
+        <span className="font-sans text-[10px] uppercase tracking-[0.3em] text-[#778294]">Scroll</span>
+        <div className="w-px h-10 bg-[#F0EEE7]/20 relative overflow-hidden">
+          <motion.div 
+            className="absolute top-0 left-0 w-full bg-[#8DEBFF]"
+            animate={{ height: ["0%", "100%", "0%"], top: ["0%", "0%", "100%"] }}
+            transition={{ duration: 2.5, repeat: Infinity, ease: "easeInOut" }}
           />
         </div>
       </motion.div>
