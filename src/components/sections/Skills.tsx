@@ -61,8 +61,7 @@ export function Skills() {
             variants={fadeUp} custom={0}
             className="font-display text-6xl md:text-8xl lg:text-9xl text-[#F0EEE7] leading-[0.85] tracking-tight"
           >
-            Technical <br /> 
-            <span className="italic text-[#778294]">Taxonomy.</span>
+            Skills.
           </motion.h2>
         </motion.div>
 
@@ -85,7 +84,7 @@ export function Skills() {
                 </motion.span>
                 <motion.h3 
                   variants={fadeUp} custom={0.08}
-                  className="font-display text-5xl md:text-7xl text-[#F0EEE7] italic leading-[0.9]"
+                  className="font-display text-5xl md:text-7xl text-[#F0EEE7] leading-[0.9]"
                 >
                   {category.title}
                 </motion.h3>

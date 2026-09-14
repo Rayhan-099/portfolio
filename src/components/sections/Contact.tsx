@@ -37,9 +37,7 @@ export function Contact() {
             variants={fadeUp} custom={0}
             className="font-display text-[clamp(3.5rem,12vw,14rem)] text-[#F0EEE7] leading-[0.85] tracking-tight mb-12"
           >
-            LET&apos;S BUILD <br /> 
-            <span className="italic text-[#B8C0CC] font-light">SOMETHING</span> <br /> 
-            <span className="italic text-[#8DEBFF]">INTELLIGENT.</span>
+            Contact.
           </motion.h2>
         </motion.div>
 

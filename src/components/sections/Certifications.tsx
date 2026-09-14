@@ -44,7 +44,7 @@ export function Certifications() {
                 Validation
               </motion.span>
               <motion.h2 variants={fadeUp} custom={0.1} className="font-display text-5xl md:text-7xl lg:text-8xl text-[#F0EEE7] leading-[0.9] tracking-tight">
-                Credentials & <br/> <span className="italic text-[#778294]">Knowledge.</span>
+                Certifications.
               </motion.h2>
             </motion.div>
             
@@ -54,7 +54,7 @@ export function Certifications() {
               viewport={{ once: true, amount: 0.3 }}
               className="flex flex-col items-start md:items-end gap-6 max-w-sm text-left md:text-right"
             >
-              <motion.span variants={fadeUp} custom={0.2} className="font-display text-7xl text-[#778294]/50 italic leading-none">{String(certifications.length).padStart(2, '0')}</motion.span>
+              <motion.span variants={fadeUp} custom={0.2} className="font-display text-7xl text-[#778294]/50 leading-none">{String(certifications.length).padStart(2, '0')}</motion.span>
               <motion.p variants={fadeUp} custom={0.3} className="font-sans text-sm text-[#B8C0CC] font-light leading-relaxed">
                 Continuous learning and professional verification across AI, Data Science, and Systems Architecture.
               </motion.p>
@@ -63,7 +63,7 @@ export function Certifications() {
                 onClick={() => setIsArchiveOpen(true)}
                 className="group flex items-center gap-4 text-xs font-sans uppercase tracking-widest text-[#8DEBFF] hover:text-[#F0EEE7] transition-colors pb-2 border-b border-[#8DEBFF]/30 hover:border-[#F0EEE7] mt-4"
               >
-                View Full Archive
+                View All 31
                 <span className="group-hover:translate-x-2 transition-transform duration-300">→</span>
               </motion.button>
             </motion.div>
@@ -128,13 +128,13 @@ export function Certifications() {
                   <span className="text-[#B8C0CC] font-sans text-[11px] uppercase tracking-[0.4em] block mb-4">
                     Complete Log
                   </span>
-                  <h2 className="font-display text-5xl md:text-6xl text-[#F0EEE7]">Certification Archive</h2>
+                  <h2 className="font-display text-5xl md:text-6xl text-[#F0EEE7]">All Certifications</h2>
                 </div>
                 <button 
                   onClick={() => setIsArchiveOpen(false)}
                   className="text-[11px] font-sans uppercase tracking-[0.2em] text-[#8DEBFF] hover:text-[#F0EEE7] transition-colors pb-2 border-b border-transparent hover:border-[#F0EEE7]"
                 >
-                  Close Archive
+                  Close
                 </button>
               </div>
 

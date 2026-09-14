@@ -130,7 +130,7 @@ export function Projects() {
                 className="font-display text-5xl md:text-7xl text-[#F0EEE7] leading-[0.9] tracking-tight"
               >
                 Current <br/>
-                <span className="italic text-[#778294]">Capital</span>
+                <span className="text-[#778294]">Capital</span>
               </motion.h3>
               <motion.span variants={fadeUp} custom={0.1} className="font-sans text-lg text-[#8DEBFF] italic">
                 Finance Manager
@@ -194,7 +194,7 @@ export function Projects() {
                 className="font-display text-4xl md:text-6xl text-[#F0EEE7] leading-[0.95] tracking-tight"
               >
                 Health <br/>
-                <span className="italic text-[#778294]">Assistant</span>
+                <span className="text-[#778294]">Assistant</span>
               </motion.h3>
               <motion.p 
                 variants={fadeUp} custom={0.15}
@@ -223,7 +223,7 @@ export function Projects() {
               <span className="font-sans text-[11px] tracking-[0.4em] uppercase text-[#8DEBFF]/60 block mb-4">04 / {String(total).padStart(2, "0")}</span>
               <h3 className="font-display text-4xl md:text-6xl lg:text-7xl text-[#F0EEE7] tracking-tight">
                 Real-Time Hand <br className="hidden md:block" />
-                <span className="italic text-[#778294]">Tracking Visualizer</span>
+                <span className="text-[#778294]">Tracking Visualizer</span>
               </h3>
             </motion.div>
             

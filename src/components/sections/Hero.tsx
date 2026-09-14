@@ -93,10 +93,7 @@ export function Hero() {
       {/* Bottom gradient to blend into next section */}
       <div className="absolute inset-x-0 bottom-0 h-[40%] z-10 bg-gradient-to-t from-[#080A0F] via-[#080A0F]/60 to-transparent pointer-events-none" />
 
-      {/* Cherry blossom foreground layer — subtle depth */}
-      <motion.div style={{ opacity, y: useTransform(scrollYProgress, [0, 1], ["0%", "-5%"]) }} className="absolute top-0 right-0 w-[50vw] h-[60vh] z-[5] pointer-events-none opacity-20 mix-blend-screen">
-        <img src="/media/atmosphere/mist.png" alt="" className="w-full h-full object-cover object-right-top" />
-      </motion.div>
+
 
       {/* Main Content — positioned at bottom for cinematic weight */}
       <motion.div 

@@ -36,8 +36,7 @@ export function Experience() {
             variants={fadeUp} custom={0}
             className="font-display text-6xl md:text-8xl lg:text-9xl text-[#F0EEE7] leading-[0.85] tracking-tight"
           >
-            Engineering <br /> 
-            <span className="italic text-[#778294]">Timeline.</span>
+            Experience.
           </motion.h2>
         </motion.div>
 

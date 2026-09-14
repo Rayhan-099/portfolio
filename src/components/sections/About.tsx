@@ -81,9 +81,7 @@ export function About() {
               variants={revealVariants}
               custom={0}
             >
-              Software should feel <br /> 
-              <span className="italic text-[#B8C0CC] font-light">authored,</span> <br className="hidden md:block" />
-              <span className="italic text-[#B8C0CC] font-light">not assembled.</span>
+              About.
             </motion.h2>
 
             <div className="flex flex-col gap-6 max-w-2xl">

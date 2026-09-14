@@ -7,7 +7,7 @@ import * as THREE from "three";
 
 function DustMotes() {
   const pointsRef = useRef<THREE.Points>(null);
-  const count = 600;
+  const count = 200;
   
   const positions = useMemo(() => {
     const p = new Float32Array(count * 3);
@@ -34,7 +34,7 @@ function DustMotes() {
         size={0.015}
         sizeAttenuation={true}
         depthWrite={false}
-        opacity={0.3}
+        opacity={0.15}
         blending={THREE.AdditiveBlending}
       />
     </Points>
